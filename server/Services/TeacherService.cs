@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using server.Dtos.SchoolTeacher;
 using server.Dtos.Teacher;
+using server.Dtos.TeacherSubject;
 using server.Models;
 using server.Services.Interfaces;
 
@@ -30,6 +32,64 @@ namespace server.Services
                 await _context.dbo_Teacher.AddAsync(teacher);
                 await _context.SaveChangesAsync();
                 res.Data = _mapper.Map<GetTeacherDto>(teacher);
+            }
+            catch (Exception ex)
+            {
+                res.Message = ex.Message;
+                res.Success = false;
+            }
+            return res;
+        }
+
+        public async Task<SR<GetTeacherDto>> AssignSubjectToTeacher(AddTeacherSubjectDto newTeacherSubject)
+        {
+            var res = new SR<GetTeacherDto>();
+            try
+            {
+                var teacher = await _context.dbo_Teacher.FirstOrDefaultAsync(x => x.Id == newTeacherSubject.TeacherId);
+                var subject = await _context.dbo_Subject.FirstOrDefaultAsync(x => x.Id == newTeacherSubject.SubjectId);
+                if (teacher == null || subject == null)
+                {
+                    res.NotFound("Teacher or subject");
+                    return res;
+                }
+                await _context.dbo_TeacherSubject.AddAsync(_mapper.Map<dbo_TeacherSubject>(newTeacherSubject));
+                await _context.SaveChangesAsync();
+                res.Data = _mapper.Map<GetTeacherDto>(teacher);
+            }
+            catch (Exception ex)
+            {
+                res.Message = ex.Message;
+                res.Success = false;
+            }
+            return res;
+        }
+
+        public async Task<SR<GetTeacherDto>> AssignTeacherToSchool(AddSchoolTeacherDto newSchoolTeacher)
+        {
+            var res = new SR<GetTeacherDto>();
+            try
+            {
+                var teacher = await _context.dbo_Teacher.FirstOrDefaultAsync(x => x.Id == newSchoolTeacher.TeacherId);
+                var school = await _context.dbo_School.FirstOrDefaultAsync(x => x.Id == newSchoolTeacher.SchoolId);
+
+                if (teacher == null || school == null)
+                {
+                    res.NotFound("School or Teachr");
+                    return res;
+                }
+                if (await _context.dbo_SchoolTeacher.FirstOrDefaultAsync(x => x.SchoolId == newSchoolTeacher.SchoolId && x.TeacherId == newSchoolTeacher.TeacherId) == null)
+                {
+                    await _context.dbo_SchoolTeacher.AddAsync(_mapper.Map<dbo_SchoolTeacher>(newSchoolTeacher));
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    res.Message = "Teacher is already assigned to this school";
+                    res.Success = false;
+                }
+                res.Data = _mapper.Map<GetTeacherDto>(teacher);
+
             }
             catch (Exception ex)
             {
@@ -96,6 +156,23 @@ namespace server.Services
             return res;
         }
 
+        public async Task<SR<List<GetTeacherWSchoolsAndSubjectsDto>>> GetAllTeachersWithSchoolsAndSubjects()
+        {
+            var res = new SR<List<GetTeacherWSchoolsAndSubjectsDto>>();
+            try
+            {
+                res.Data = await _context.dbo_Teacher.Select(x => _mapper.Map<GetTeacherWSchoolsAndSubjectsDto>(x)).ToListAsync();
+                res.Data.ForEach(async x => x.Schools = await GetSchools(x.Id));
+                res.Data.ForEach(async x => x.Subjects = await GetSubjects(x.Id));
+            }
+            catch (Exception ex)
+            {
+                res.Message = ex.Message;
+                res.Success = false;
+            }
+            return res;
+        }
+
         public async Task<SR<GetTeacherDto>> GetTeacherById(int teacherId)
         {
             var res = new SR<GetTeacherDto>();
@@ -123,8 +200,8 @@ namespace server.Services
             var res = new SR<GetTeacherDto>();
             try
             {
-                var teacher = await _context.dbo_Teacher.FirstOrDefaultAsync(x=>x.Id == teacherId);
-                if(teacher == null)
+                var teacher = await _context.dbo_Teacher.FirstOrDefaultAsync(x => x.Id == teacherId);
+                if (teacher == null)
                 {
                     res.NotFound("Teacher");
                     return res;
@@ -144,5 +221,18 @@ namespace server.Services
             }
             return res;
         }
+
+        //Helper methods for getting a teacher and his/her schools and subjects
+        private async Task<List<string>> GetSchools(int teacherId) => await _context.dbo_SchoolTeacher
+            .Include(x => x.School)
+            .Where(x => x.TeacherId == teacherId)
+            .Select(x => x.School.Name)
+            .ToListAsync();
+
+        private async Task<List<string>> GetSubjects(int teacherId) => await _context.dbo_TeacherSubject
+            .Include(x => x.Subject)
+            .Where(x => x.TeacherId == teacherId)
+            .Select(x => x.Subject.Name)
+            .ToListAsync();
     }
 }

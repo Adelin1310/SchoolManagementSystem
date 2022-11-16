@@ -9,6 +9,7 @@ namespace server.Services.Interfaces
     public interface ISchoolService
     {
         Task<SR<List<GetSchoolDto>>> GetAllSchools();
+        Task<SR<List<object>>> GetAllSchoolsWithClasses();
         Task<SR<List<GetSchoolDto>>> GetAllSchoolsOrderedByStudents();
         Task<SR<GetSchoolDto>> AddSchool(AddSchoolDto newSchool);
         Task<object> DeleteSchoolById (int schoolId);

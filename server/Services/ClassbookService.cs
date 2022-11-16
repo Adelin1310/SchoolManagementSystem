@@ -71,11 +71,13 @@ namespace server.Services
             var res = new SR<List<GetClassbookDto>>();
             try
             {
-                res.Data = await _context.dbo_Classbook
+                var data = await _context.dbo_Classbook
                     .Include(x=>x.Class)
                     .ThenInclude(x=>x.School)
                     .Select(x => _mapper.Map<GetClassbookDto>(x))
                     .ToListAsync();
+                data.ForEach(async (x)=>x.StudentsCount = await _context.dbo_Student.Where(y=>y.ClassId == x.ClassId).CountAsync());
+                res.Data = data;
             }
             catch (System.Exception ex)
             {
@@ -90,12 +92,16 @@ namespace server.Services
             var res = new SR<List<GetClassbookDto>>();
             try
             {
-                res.Data = await _context.dbo_Classbook
+                var data = await _context.dbo_Classbook
                     .Include(x => x.Class)
                     .ThenInclude(x=>x.School)
                     .Where(x => x.Class.SchoolId == schoolId)
                     .Select(x => _mapper.Map<GetClassbookDto>(x))
                     .ToListAsync();
+                data.ForEach(async (x)=>x.StudentsCount = await _context.dbo_Student.Where(y=>y.ClassId == x.ClassId).CountAsync());
+                res.Data = data;
+                    
+                    
             }
             catch (System.Exception ex)
             {

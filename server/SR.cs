@@ -10,11 +10,18 @@ namespace server
         public T Data { get; set; }
         public string Message { get; set; }
         public bool Success { get; set; } = true;
+        public int StatusCode { get; set; } = 200;
 
         public void NotFound(string Name)
         {
             this.Message = $"{Name} not found!";
             Success = false;
+            StatusCode = StatusCodes.Status404NotFound;
         }
+
+        public void SetStatusCode(int statusCode){
+            this.StatusCode = statusCode;
+        }
+
     }
 }

@@ -71,7 +71,9 @@ namespace server.Services
             var res = new SR<List<GetClassDto>>();
             try
             {
-                res.Data = await _context.dbo_Class.Select(x => _mapper.Map<GetClassDto>(x)).ToListAsync();
+                res.Data = await _context.dbo_Class
+                    .Include(x=>x.School)
+                    .Select(x => _mapper.Map<GetClassDto>(x)).ToListAsync();
             }
             catch (System.Exception ex)
             {
@@ -108,6 +110,7 @@ namespace server.Services
                 else
                 {
                     cls.SchoolId = updatedClass.SchoolId;
+                    cls.Name = updatedClass.Name;
                     await _context.SaveChangesAsync();
                     res.Data = _mapper.Map<GetClassDto>(cls);
                 }

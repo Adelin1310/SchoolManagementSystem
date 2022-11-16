@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using server.Dtos.Class;
 using server.Dtos.School;
 using server.Models;
 using server.Services.Interfaces;
@@ -82,6 +83,29 @@ namespace server.Services
                         .OrderByDescending(x => _context.dbo_Student.Where(y => y.SchoolId == x.Id).ToArray().Count())
                         .Select(x => _mapper.Map<GetSchoolDto>(x))
                         .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                res.Message = ex.Message;
+                res.Success = false;
+            }
+            return res;
+        }
+
+        public async Task<SR<List<object>>> GetAllSchoolsWithClasses()
+        {
+            var res = new SR<List<object>>();
+            try
+            {
+                var schools = await _context.dbo_School.ToListAsync();
+                res.Data = new List<object>();
+                foreach (var school in schools)
+                {
+                    res.Data.Add(new {
+                        school= school,
+                        classes = await _context.dbo_Class.Where(x=>x.SchoolId == school.Id).Select(x=>new {Id = x.Id, Name = x.Name}).ToListAsync()
+                    });
+                }
             }
             catch (Exception ex)
             {

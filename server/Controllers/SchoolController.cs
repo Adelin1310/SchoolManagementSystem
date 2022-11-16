@@ -28,6 +28,11 @@ namespace server.Controllers
             var res = await _service.GetAllSchools();
             return res;
         }
+        [HttpGet("GetAllSchoolsWithClasses")]
+        public async Task<ActionResult<SR<List<object>>>> GetAllSchoolsWithClasses(){
+            var res = await _service.GetAllSchoolsWithClasses();
+            return res;
+        }
         [HttpGet("GetAllSchoolsOrderedByStudents")]
         public async Task<ActionResult<SR<List<GetSchoolDto>>>> GetAllSchoolsOrderedByStudents()
         {

@@ -24,9 +24,5 @@ namespace server
         {
         }
 
-        protected override void OnModelCreating(ModelBuilder builder){
-            builder.Entity<dbo_SchoolTeacher>().HasNoKey();
-            builder.Entity<dbo_TeacherSubject>().HasNoKey();
-        }
     }
 }

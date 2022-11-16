@@ -12,5 +12,7 @@ namespace server.Dtos.Student
         public string Address { get; set; }
         public int ClassId { get; set; }
         public int SchoolId { get; set; }
+        public string? Photo { get; set; }
+
     }
 }

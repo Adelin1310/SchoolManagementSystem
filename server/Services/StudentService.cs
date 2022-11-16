@@ -39,22 +39,26 @@ namespace server.Services
             return res;
         }
 
-        public async Task<object> DeleteStudentById(int studentId)
+        public async Task<SR<object>> DeleteStudentById(int studentId)
         {
-            var res = new SR<GetStudentDto>();
+            var res = new SR<object>();
             try
             {
                 var student = await _context.dbo_Student.FirstOrDefaultAsync(x => x.Id == studentId);
                 if (student == null)
-                    return new { Message = "Student not found!", Success = false };
+                {
+                    res.NotFound("Student");
+                    return res;
+                }
                 _context.dbo_Student.Remove(student);
                 await _context.SaveChangesAsync();
-                return new { Message = "Student deleted successfully!", Success = true };
+                return res;
             }
             catch (Exception ex)
             {
                 res.Message = ex.Message;
                 res.Success = false;
+                res.StatusCode = 500;
             }
             return res;
         }
@@ -65,8 +69,8 @@ namespace server.Services
             try
             {
                 res.Data = await _context.dbo_Student
-                    .Include(x=>x.Class)
-                    .Include(x=>x.School)
+                    .Include(x => x.Class)
+                    .Include(x => x.School)
                     .Select(x => _mapper.Map<GetStudentDto>(x))
                     .ToListAsync();
             }
@@ -110,7 +114,9 @@ namespace server.Services
                     res.NotFound("School");
                     return res;
                 }
-                res.Data = await _context.dbo_Student.Where(x => x.SchoolId == schoolId).Select(x => _mapper.Map<GetStudentDto>(x)).ToListAsync();
+                res.Data = await _context.dbo_Student
+                    .Include(x => x.Class)
+                    .Where(x => x.SchoolId == schoolId).Select(x => _mapper.Map<GetStudentDto>(x)).ToListAsync();
             }
             catch (Exception ex)
             {
@@ -175,6 +181,7 @@ namespace server.Services
                 student.FirstName = updatedStudent.FirstName;
                 student.LastName = updatedStudent.LastName;
                 student.SchoolId = updatedStudent.SchoolId;
+                student.Photo = updatedStudent.Photo;
 
                 await _context.SaveChangesAsync();
 

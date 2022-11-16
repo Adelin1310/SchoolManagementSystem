@@ -17,43 +17,56 @@ namespace server.Controllers
         public StudentController(IStudentService service)
         {
             _service = service;
+
         }
         [HttpGet("GetAllStudents")]
         public async Task<ActionResult<SR<List<GetStudentDto>>>> GetAllStudents()
         {
             var res = await _service.GetAllStudents();
-            return res;
+            return ErrorHandler.ResponseCodeHandler(res.StatusCode, res);
         }
         [HttpGet("GetAllStudentsBySchoolId/{schoolId}")]
-        public async Task<ActionResult<SR<List<GetStudentDto>>>> GetAllStudentsBySchoolId(int schoolId){
+        public async Task<ActionResult<SR<List<GetStudentDto>>>> GetAllStudentsBySchoolId(int schoolId)
+        {
             var res = await _service.GetAllStudentsBySchoolId(schoolId);
-            return res;
+            return ErrorHandler.ResponseCodeHandler(res.StatusCode, res);
+
         }
-        
+
         [HttpGet("GetAllStudentsByClassId/{classId}")]
-        public async Task<ActionResult<SR<List<GetStudentDto>>>> GetAllStudentsByClassId(int classId){
+        public async Task<ActionResult<SR<List<GetStudentDto>>>> GetAllStudentsByClassId(int classId)
+        {
             var res = await _service.GetAllStudentsByClassId(classId);
-            return res;
+            return ErrorHandler.ResponseCodeHandler(res.StatusCode, res);
+
         }
         [HttpGet("GetStudentById/{studentId}")]
-        public async Task<ActionResult<SR<GetStudentDto>>> GetStudentById(int studentId){
+        public async Task<ActionResult<SR<GetStudentDto>>> GetStudentById(int studentId)
+        {
             var res = await _service.GetStudentById(studentId);
-            return res;
+            return ErrorHandler.ResponseCodeHandler(res.StatusCode, res);
+
         }
         [HttpPost("AddStudent")]
-        public async Task<ActionResult<SR<GetStudentDto>>> AddStudent(AddStudentDto newStudent){
+        public async Task<ActionResult<SR<GetStudentDto>>> AddStudent(AddStudentDto newStudent)
+        {
             var res = await _service.AddStudent(newStudent);
-            return res;
+            return ErrorHandler.ResponseCodeHandler(res.StatusCode, res);
+
         }
         [HttpPut("UpdateStudentById/{studentId}")]
-        public async Task<ActionResult<SR<GetStudentDto>>> UpdateStudentById(int studentId, UpdateStudentDto updatedStudent){
+        public async Task<ActionResult<SR<GetStudentDto>>> UpdateStudentById(int studentId, UpdateStudentDto updatedStudent)
+        {
             var res = await _service.UpdateStudentById(studentId, updatedStudent);
-            return res;
+            return ErrorHandler.ResponseCodeHandler(res.StatusCode, res);
+
         }
         [HttpDelete("DeleteStudentById/{studentId}")]
-        public async Task<ActionResult<object>> DeleteStudentById(int studentId){
+        public async Task<ActionResult<object>> DeleteStudentById(int studentId)
+        {
             var res = await _service.DeleteStudentById(studentId);
-            return res;
+            return ErrorHandler.ResponseCodeHandler(res.StatusCode, res);
+
         }
     }
 }

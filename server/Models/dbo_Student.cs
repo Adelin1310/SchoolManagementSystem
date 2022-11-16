@@ -15,5 +15,6 @@ namespace server.Models
         public dbo_Class Class { get; set; }
         public int SchoolId { get; set; }
         public dbo_School School { get; set; }
+        public string? Photo { get; set; }
     }
 }
