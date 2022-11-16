@@ -25,31 +25,31 @@ namespace server.Controllers
             var res = await _service.GetAllClassbooks();
             return res;
         }
-        [HttpGet("GetAllSchoolClassbooks/{schoolId}")]
+        [HttpGet("GetAllSchoolClassbooks")]
         public async Task<ActionResult<SR<List<GetClassbookDto>>>> GetAllSchoolClassbooks(int schoolId)
         {
             var res = await _service.GetAllSchoolClassbooks(schoolId);
             return res;
         }
-        [HttpGet("GetClassbook/{classbookId}")]
+        [HttpGet("GetClassbook")]
         public async Task<ActionResult<SR<GetClassbookDto>>> GetClassbook(int classbookId)
         {
             var res = await _service.GetClassbook(classbookId);
             return res;
         }
-        [HttpGet("GetClassbookByClass/{classId}")]
+        [HttpGet("GetClassbookByClass")]
         public async Task<ActionResult<SR<GetClassbookDto>>> GetClassbookByClass(int classId)
         {
             var res = await _service.GetClassbookByClass(classId);
             return res;
         }
-        [HttpPut("UpdateClassbookById/{classbookId}")]
+        [HttpPut("UpdateClassbookById")]
         public async Task<ActionResult<SR<GetClassbookDto>>> UpdateClassbookById(int classbookId, UpdateClassbookDto updatedClassbook)
         {
             var res = await _service.UpdateClassbookById(classbookId, updatedClassbook);
             return res;
         }
-        [HttpDelete("DeleteClassbookById/{classbookId}")]
+        [HttpDelete("DeleteClassbookById")]
         public async Task<ActionResult<object>> DeleteClassbookById(int classbookId)
         {
             var res = await _service.DeleteClassbookById(classbookId);

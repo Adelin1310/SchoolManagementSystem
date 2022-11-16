@@ -23,7 +23,7 @@ namespace server.Controllers
             var res = await _service.AddAbsence(newAbsence);
             return res;
         }
-        [HttpGet("GetAllStudentAbsences/{studentId}")]
+        [HttpGet("GetAllStudentAbsences")]
         public async Task<ActionResult<SR<List<GetAbsenceDto>>>> GetAllStudentAbsences(int studentId)
         {
             var res = await _service.GetAllStudentAbsences(studentId);
@@ -36,30 +36,30 @@ namespace server.Controllers
             var res = await _service.GetAllAbsences();
             return res;
         }
-        [HttpGet("GetAllSchoolAbsences/{schoolId}")]
+        [HttpGet("GetAllSchoolAbsences")]
         public async Task<ActionResult<SR<List<GetAbsenceDto>>>> GetAllSchoolAbsences(int schoolId)
         {
             var res = await _service.GetAllSchoolAbsences(schoolId);
             return res;
         }
-        [HttpGet("GetAllClassAbsences/{classId}")]
+        [HttpGet("GetAllClassAbsences")]
         public async Task<ActionResult<SR<List<GetAbsenceDto>>>> GetAllClassAbsences(int classId)
         {
             var res = await _service.GetAllClassAbsences(classId);
             return res;
         }
-        [HttpGet("GetAbsenceById/{absenceId}")]
+        [HttpGet("GetAbsenceById")]
         public async Task<ActionResult<SR<GetAbsenceDto>>> GetAbsenceById(int absenceId)
         {
             var res = await _service.GetAbsenceById(absenceId);
             return res;
         }
-        [HttpPut("UpdateAbsenceById{absenceId}")]
+        [HttpPut("UpdateAbsenceById")]
         public async Task<ActionResult<SR<GetAbsenceDto>>> UpdateAbsenceById(int absenceId, UpdateAbsenceDto updatedAbsence){
             var res = await _service.UpdateAbsenceById(absenceId, updatedAbsence);
             return res;
         }
-        [HttpDelete("DeleteAbsenceById/{absenceId}")]
+        [HttpDelete("DeleteAbsenceById")]
         public async Task<ActionResult<object>> DeleteAbsenceById(int absenceId){
             var res = await _service.DeleteAbsenceById(absenceId);
             return res;

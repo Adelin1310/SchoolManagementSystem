@@ -31,13 +31,13 @@ namespace server.Controllers
             var res = await _service.AddSubject(newSubject);
             return res;
         }
-        [HttpPut("UpdateSubjectById/{subjectId}")]
+        [HttpPut("UpdateSubjectById")]
         public async Task<ActionResult<SR<GetSubjectDto>>> UpdateSubjectById(int subjectId, UpdateSubjectDto updatedSubject)
         {
             var res = await _service.UpdateSubjectById(subjectId, updatedSubject);
             return res;
         }
-        [HttpDelete("DeleteSubjectById/{subjectId}")]
+        [HttpDelete("DeleteSubjectById")]
         public async Task<ActionResult<object>> DeleteSubjectById(int subjectId){
             var res =await _service.DeleteSubjectById(subjectId);
             return res;
