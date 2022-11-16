@@ -30,25 +30,25 @@ namespace server.Controllers
             var res = await _service.AddGrade(newGrade);
             return res;
         }
-        [HttpDelete("DeleteGradeById/{gradeId}")]
+        [HttpDelete("DeleteGradeById")]
         public async Task<ActionResult<object>> DeleteGradeById(int gradeId)
         {
             var res = await _service.DeleteGradeById(gradeId);
             return res;
         }
-        [HttpGet("GetGradeById/{gradeId}")]
+        [HttpGet("GetGradeById")]
         public async Task<ActionResult<SR<GetGradeDto>>> GetGradeById(int gradeId)
         {
             var res = await _service.GetGradeById(gradeId);
             return res;
         }
-        [HttpGet("GetStudentGradesByStudentId/{studentId}")]
+        [HttpGet("GetStudentGradesByStudentId")]
         public async Task<ActionResult<SR<List<GetGradeDto>>>> GetStudentGradesByStudentId(int studentId)
         {
             var res = await _service.GetStudentGradesByStudentId(studentId);
             return res;
         }
-        [HttpPut("UpdateGradeById/{gradeId}")]
+        [HttpPut("UpdateGradeById")]
         public async Task<ActionResult<SR<GetGradeDto>>> UpdateGradeById(int gradeId, UpdateGradeDto updatedGrade)
         {
             var res = await _service.UpdateGradeById(gradeId, updatedGrade);

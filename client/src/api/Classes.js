@@ -1,40 +1,43 @@
+import axios from "axios";
 import { classHost } from "./globals";
 
 const host = classHost
 
 
 export const getAllClasses = async () => {
-    const response = await fetch(host + 'GetAllClasses');
-    const json = await response.json();
-    return json;
+    const response = await axios.get('GetAllClasses', {
+        baseURL: host
+    })
+    return response.data;
 }
 
 export const getAllClassesBySchoolId = async (id) => {
-    const response = await fetch(host + 'GetAllClassesBySchoolId/' + id);
-    const json = await response.json();
-    return json;
+    const response = await axios.get('GetAllClassesBySchoolId', {
+        baseURL: host,
+        params: { schoolId: id }
+    })
+    return response.data;
 }
 
 export const getClassById = async (id) => {
-    const response = await fetch(host + 'GetClassById/' + id);
-    const json = await response.json();
-    return json;
+    const response = await axios.get('GetClassById', {
+        baseURL: host,
+        params: { classId: id }
+    })
+    return response.data;
 }
 
 export const deleteClassById = async (id) => {
-    const response = await fetch(host + 'DeleteClassById/' + id);
-    const json = await response.json();
-    return json;
+    const response = await axios.delete('DeleteClassById', {
+        baseURL: host,
+        params: { classId: id }
+    })
+    return response.data;
 }
 
 export const addClass = async (data) => {
-    const response = await fetch(host + 'AddClass', {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-    const json = await response.json();
-    return json;
+    const response = await axios.post('AddClass', data, {
+        baseURL: host
+    })
+    return response.data;
 }

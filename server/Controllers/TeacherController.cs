@@ -33,13 +33,13 @@ namespace server.Controllers
             var res = await _service.GetAllTeachersWithSchoolsAndSubjects();
             return res;
         }
-        [HttpGet("GetAllTeachersBySchoolId/{schoolId}")]
+        [HttpGet("GetAllTeachersBySchoolId")]
         public async Task<ActionResult<SR<List<GetTeacherDto>>>> GetAllTeachersBySchoolId(int schoolId)
         {
             var res = await _service.GetAllTeachersBySchoolId(schoolId);
             return res;
         }
-        [HttpGet("GetTeacherById/{teacherId}")]
+        [HttpGet("GetTeacherById")]
         public async Task<ActionResult<SR<GetTeacherDto>>> GetTeacherById(int teacherId)
         {
             var res = await _service.GetTeacherById(teacherId);
@@ -51,7 +51,7 @@ namespace server.Controllers
             var res = await _service.AddTeacher(newTeacher);
             return res;
         }
-        [HttpPut("UpdateTeacherById/{teacherId}")]
+        [HttpPut("UpdateTeacherById")]
         public async Task<ActionResult<SR<GetTeacherDto>>> UpdateTeacherById(int teacherId, UpdateTeacherDto updatedTeacher)
         {
             var res = await _service.UpdateTeacherById(teacherId, updatedTeacher);
@@ -69,7 +69,7 @@ namespace server.Controllers
             var res = await _service.AssignSubjectToTeacher(newTeacherSubject);
             return res;
         }
-        [HttpDelete("DeleteTeacherById/{teacherId}")]
+        [HttpDelete("DeleteTeacherById")]
         public async Task<ActionResult<object>> DeleteTeacherById(int teacherId)
         {
             var res = await _service.DeleteTeacherById(teacherId);

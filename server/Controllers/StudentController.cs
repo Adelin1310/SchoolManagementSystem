@@ -25,7 +25,7 @@ namespace server.Controllers
             var res = await _service.GetAllStudents();
             return ErrorHandler.ResponseCodeHandler(res.StatusCode, res);
         }
-        [HttpGet("GetAllStudentsBySchoolId/{schoolId}")]
+        [HttpGet("GetAllStudentsBySchoolId/")]
         public async Task<ActionResult<SR<List<GetStudentDto>>>> GetAllStudentsBySchoolId(int schoolId)
         {
             var res = await _service.GetAllStudentsBySchoolId(schoolId);
@@ -33,14 +33,14 @@ namespace server.Controllers
 
         }
 
-        [HttpGet("GetAllStudentsByClassId/{classId}")]
+        [HttpGet("GetAllStudentsByClassId/")]
         public async Task<ActionResult<SR<List<GetStudentDto>>>> GetAllStudentsByClassId(int classId)
         {
             var res = await _service.GetAllStudentsByClassId(classId);
             return ErrorHandler.ResponseCodeHandler(res.StatusCode, res);
 
         }
-        [HttpGet("GetStudentById/{studentId}")]
+        [HttpGet("GetStudentById")]
         public async Task<ActionResult<SR<GetStudentDto>>> GetStudentById(int studentId)
         {
             var res = await _service.GetStudentById(studentId);
@@ -54,14 +54,14 @@ namespace server.Controllers
             return ErrorHandler.ResponseCodeHandler(res.StatusCode, res);
 
         }
-        [HttpPut("UpdateStudentById/{studentId}")]
+        [HttpPut("UpdateStudentById")]
         public async Task<ActionResult<SR<GetStudentDto>>> UpdateStudentById(int studentId, UpdateStudentDto updatedStudent)
         {
             var res = await _service.UpdateStudentById(studentId, updatedStudent);
             return ErrorHandler.ResponseCodeHandler(res.StatusCode, res);
 
         }
-        [HttpDelete("DeleteStudentById/{studentId}")]
+        [HttpDelete("DeleteStudentById/")]
         public async Task<ActionResult<object>> DeleteStudentById(int studentId)
         {
             var res = await _service.DeleteStudentById(studentId);

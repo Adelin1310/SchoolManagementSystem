@@ -17,7 +17,7 @@ namespace server.Controllers
         {
             _service = service;
         }
-        [HttpDelete("DeleteSchoolById/{schoolId}")]
+        [HttpDelete("DeleteSchoolById")]
         public async Task<ActionResult<object>> DeleteSchoolById(int schoolId){
             var res = await _service.DeleteSchoolById(schoolId);
             return res;
@@ -44,7 +44,7 @@ namespace server.Controllers
             var res = await _service.AddSchool(newSchool);
             return res;
         }
-        [HttpPut("UpdateSchoolById/{schoolId}")]
+        [HttpPut("UpdateSchoolById")]
         public async Task<ActionResult<SR<GetSchoolDto>>> UpdateSchoolById(int schoolId, UpdateSchoolDto updatedSchool){
             var res = await _service.UpdateSchoolById(schoolId, updatedSchool);
             return res;

@@ -17,7 +17,7 @@ namespace server.Controllers
         {
             _service = service;
         }
-        [HttpDelete("DeleteClassById/{classId}")]
+        [HttpDelete("DeleteClassById")]
         public async Task<ActionResult<object>> DeleteClassById(int classId)
         {
             var res = await _service.DeleteClassById(classId);
@@ -36,13 +36,13 @@ namespace server.Controllers
             var res = await _service.GetAllClasses();
             return res;
         }
-        [HttpGet("GetClassById/{classId}")]
+        [HttpGet("GetClassById")]
         public async Task<ActionResult<SR<GetClassDto>>> GetClassById(int classId)
         {
             var res = await _service.GetClassById(classId);
             return res;
         }
-        [HttpPut("UpdateClassById/{classId}")]
+        [HttpPut("UpdateClassById")]
         public async Task<ActionResult<SR<GetClassDto>>> UpdateClassById(int classId, UpdateClassDto updatedClass)
         {
             var res = await _service.UpdateClassById(classId, updatedClass);
