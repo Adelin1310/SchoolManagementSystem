@@ -40,3 +40,10 @@ export const teacherInputs = [{
     placeholder: 'Address',
 }
 ]
+
+export const classInputs =[{
+    type: 'text',
+    name: 'name',
+    label: 'Name',
+    placeholder : 'Name',
+}]

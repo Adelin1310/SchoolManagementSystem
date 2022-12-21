@@ -17,6 +17,7 @@ import ViewSubjects from "./pages/Subject/ViewSubjects";
 import CreateStudent from "./pages/Student/CreateStudent";
 import EditStudent from "./pages/Student/EditStudent";
 import CreateTeacher from "./pages/Teacher/CreateTeacher";
+import CreateClass from "./pages/Class/CreateClass";
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
             <Routes>
                 <Route path="/classbooks" element={<ViewClassbooks />} />
                 <Route path="/classes" element={<ViewClasses />} />
+                <Route path="/classes/new" element={<CreateClass />} />
                 <Route path="/classes/:classId" element={<ViewClass />} />
                 <Route path="/students" element={<ViewStudents />} />
                 <Route path="/students/new" element={<CreateStudent />} />

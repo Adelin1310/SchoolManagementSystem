@@ -4,7 +4,7 @@ import Navbar from "../../components/Navbar"
 import Datatable from "../../components/Datatable"
 import React from "react";
 import { useEffect, useState } from "react";
-import { getAllClasses } from "../../api/Classes";
+import { deleteClassById, getAllClasses } from "../../api/Classes";
 import { classColumns } from "../../datatablesource";
 
 
@@ -28,7 +28,7 @@ const ViewClasses = () => {
                 <Sidebar />
                 <div className="listContainer">
                     <Navbar />
-                    <Datatable rowsData={data} columns={dataColumns} viewPath='/classes/'/>
+                    <Datatable rowsData={data} columns={dataColumns} viewPath='/classes/' addPath='/classes/new' editPath='/classes/edit' deleteFunction={deleteClassById}/>
                 </div>
             </div >) : (<></>)
     )
