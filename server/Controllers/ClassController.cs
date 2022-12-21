@@ -30,6 +30,12 @@ namespace server.Controllers
             var res = await _service.AddClass(newClass);
             return res;
         }
+        [HttpPost("AddSecondaryEducationNoHSClasses")]
+        public async Task<ActionResult<SR<GetClassDto>>> AddSecondaryEducationNoHSClasses(char[] names, int schoolId)
+        {
+            var res = await _service.AddClass();
+            return res;
+        }
         [HttpGet("GetAllClasses")]
         public async Task<ActionResult<SR<List<GetClassDto>>>> GetAllClasses()
         {

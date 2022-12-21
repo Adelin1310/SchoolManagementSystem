@@ -47,6 +47,26 @@ namespace server.Services
             return res;
         }
 
+        public async Task<SR<List<GetClassDto>>> AddSecondaryEducationNoHSClasses(char[] names, int schoolId)
+        {
+            var res = new SR<List<GetClassDto>>();
+            try
+            {
+                var school = await _context.dbo_School.FirstOrDefaultAsync(x=>x.Id == schoolId);
+                if(school == null){
+                    res.NotFound("School");
+                    return res;
+                }
+                
+            }
+            catch (System.Exception ex)
+            {
+                res.Message = ex.Message;
+                res.Success = false;
+            }
+            return res;
+        }
+
         public async Task<object> DeleteClassById(int classId)
         {
             try
