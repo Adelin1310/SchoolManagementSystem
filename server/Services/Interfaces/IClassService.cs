@@ -12,7 +12,7 @@ namespace server.Services.Interfaces
         Task<SR<GetClassDto>> GetClassById(int classId);
         Task<SR<GetClassDto>> UpdateClassById(int classId, UpdateClassDto updatedClass);
         Task<SR<GetClassDto>> AddClass(AddClassDto newClass);
-        Task<SR<List<GetClassDto>>> AddSecondaryEducationNoHSClasses(char[] names, int schoolId);
+        Task<SR<List<GetClassDto>>> AddSecondaryEducationNoHSClasses(string[] names, int schoolId);
         Task<object> DeleteClassById(int classId);
     }
 }

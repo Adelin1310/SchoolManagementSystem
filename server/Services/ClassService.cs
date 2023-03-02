@@ -27,16 +27,17 @@ namespace server.Services
             var res = new SR<GetClassDto>();
             try
             {
-                var school= await _context.dbo_School.FirstOrDefaultAsync(x=>x.Id == newClass.SchoolId);
-                if(school == null){
+                var school = await _context.dbo_School.FirstOrDefaultAsync(x => x.Id == newClass.SchoolId);
+                if (school == null)
+                {
                     res.NotFound("School");
                     return res;
                 }
-                
+
                 var mappedClass = _mapper.Map<dbo_Class>(newClass);
                 await _context.dbo_Class.AddAsync(mappedClass);
                 await _context.SaveChangesAsync();
-                
+
                 res.Data = _mapper.Map<GetClassDto>(mappedClass);
             }
             catch (System.Exception ex)
@@ -47,17 +48,29 @@ namespace server.Services
             return res;
         }
 
-        public async Task<SR<List<GetClassDto>>> AddSecondaryEducationNoHSClasses(char[] names, int schoolId)
+        public async Task<SR<List<GetClassDto>>> AddSecondaryEducationNoHSClasses(string[] names, int schoolId)
         {
             var res = new SR<List<GetClassDto>>();
             try
             {
-                var school = await _context.dbo_School.FirstOrDefaultAsync(x=>x.Id == schoolId);
-                if(school == null){
+                var school = await _context.dbo_School.FirstOrDefaultAsync(x => x.Id == schoolId);
+                if (school == null)
+                {
                     res.NotFound("School");
                     return res;
                 }
-                
+                var classes = new List<dbo_Class>();
+                foreach (var name in names)
+                {
+                    classes.Add(_mapper.Map<dbo_Class>(new AddClassDto
+                    {
+                        Name = name,
+                        SchoolId = schoolId
+                    }));
+                }
+                await _context.dbo_Class.AddRangeAsync(classes);
+                await _context.SaveChangesAsync();
+                res.Data = classes.Select(x => _mapper.Map<GetClassDto>(x)).ToList();
             }
             catch (System.Exception ex)
             {
@@ -92,7 +105,7 @@ namespace server.Services
             try
             {
                 res.Data = await _context.dbo_Class
-                    .Include(x=>x.School)
+                    .Include(x => x.School)
                     .Select(x => _mapper.Map<GetClassDto>(x)).ToListAsync();
             }
             catch (System.Exception ex)
