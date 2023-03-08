@@ -1,0 +1,19 @@
+.profileicon {
+    display: block;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+    border-radius: 50px;
+    margin-right: 10px;
+}
+
+.profileicon:hover {
+    transition-duration: .2s;
+    opacity: .7;
+}
+
+.profileicon>img {
+    height: 50px;
+    border-radius: 50px;
+    border: 2px solid rgb(163, 26, 255);
+}

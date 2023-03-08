@@ -1,0 +1,69 @@
+@import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;800;900&display=swap);
+
+
+
+.container {
+    font-family: 'Montserrat', sans-serif;
+    ;
+    position: absolute;
+    height: 100%;
+    min-width: 20%;
+    background-image: linear-gradient(to bottom, #2e2e2e, #272727, #212121, #1a1a1a, #141414);
+    border-right: 1px solid rgb(140, 23, 218);
+}
+
+.navmenu {
+    display: flex;
+    height: 50%;
+    flex-direction: column;
+    margin: auto;
+    list-style-type: none;
+    padding: 0;
+    align-items: center;
+}
+
+hr {
+    width: 100%;
+    border-color: rgb(140, 23, 218);
+    margin: 0;
+}
+
+.navmenu>li>a {
+    color: rgb(163, 26, 255);
+    padding: 20px;
+}
+
+.navmenu>li {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    font-size: medium;
+    font-weight: 400;
+    cursor: pointer;
+    text-align: center;
+}
+
+.navmenu>li>a {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.navmenu>li>a:hover {
+    transition-duration: .5s;
+    background-image: linear-gradient(to left, #2e2e2e, #33313a, #3a3345, #41354f, #4b3659);
+    color: white;
+}
+
+.logo {
+    font-size: x-large;
+    font-weight: 400;
+    align-self: flex-start;
+    margin-top: 0;
+    color: rgb(163, 26, 255);
+    text-align: center;
+    margin: 20px auto;
+}
