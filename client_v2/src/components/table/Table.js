@@ -1,20 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import './table.css'
+const Table = ({ data, columns, options }) => {
+    const [d, setD] = useState(data)
+    const [c, setC] = useState(columns)
 
-const Table = ({ data, columns }) => {
+    useEffect(() => {
+        setC(columns)
+        setD(data)
+    }, [data, columns])
+
     return (
         <div className='TblContainer'>
-            <table className='tableMain'>
+            <table className='tableMain' width={options?.width !== undefined ? options?.width : '100%'}>
                 <thead>
                     <tr className='headRow'>
-                        {columns.map((col, idx) => (<td key={`col${idx}`} className='headCell'>{col}</td>))}
+                        {c.map((col, idx) => (<td key={`col${idx}`} className='headCell'>{col.header}</td>))}
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((d, idx) => (
+                    {d.map((d, idx) => (
                         <tr key={`row${idx}`}>
-                            {columns.map((col, cidx) => (
-                                <td key={`row${idx}col${cidx}`}>
-                                    {d[col]}
+                            {c.map((col, cidx) => (
+                                <td width={col.width !== undefined ? col.width : null} className='tableRowCell' key={`row${idx}col${cidx}`}>
+                                    {d[col.name]}
                                 </td>
                             ))}
                         </tr>

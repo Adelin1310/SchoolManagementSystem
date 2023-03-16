@@ -15,7 +15,7 @@ const Topbar = () => {
             <MenuIcon onClick={handleClick} className='sidemenubtn' />
             <ul className='topbarmenu'>
                 <li>
-                    <ProfileIcon imgUrl={'http://127.0.0.1:8887/photos/defaultProfilePicture.png'} />
+                    <ProfileIcon imgUrl={'http://localhost:8887/photos/IMG_20221021_233821_688.jpg'} />
                 </li>
             </ul>
         </div>

@@ -9,6 +9,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Schools from './pages/Schools';
+import Classes from './pages/Classes';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path:'schools',
         element:<Schools/>
+      },
+      {
+        path:'classes',
+        element:<Classes/>
       }
     ]
   }

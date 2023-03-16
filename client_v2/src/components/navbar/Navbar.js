@@ -15,7 +15,7 @@ const Navbar = () => {
       <hr />
       <ul className='navmenu'>
         <li><Link to={`schools`}><SchoolIcon className='icon' />SCHOOLS</Link> </li>
-        <li><Link to={`schools`}><ClassIcon className='icon' />CLASSES</Link></li>
+        <li><Link to={`classes`}><ClassIcon className='icon' />CLASSES</Link></li>
         <li><Link to={`schools`}><FaceIcon className='icon' />STUDENTS</Link></li>
         <li><Link to={`schools`}><LocalLibraryIcon className='icon' />TEACHERS</Link></li>
         <li><Link to={`schools`}><LibraryBooksIcon className='icon' />SUBJECTS</Link></li>

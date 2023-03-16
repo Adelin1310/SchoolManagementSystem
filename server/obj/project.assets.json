@@ -3032,23 +3032,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Adelin\\.nuget\\packages\\": {},
+    "C:\\Users\\aandr\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Facultate\\Licenta\\SchoolManagementSystem\\server\\server.csproj",
+      "projectUniqueName": "D:\\Facultate\\Licenta\\School CRM\\kk\\SchoolManagementSystem\\server\\server.csproj",
       "projectName": "server",
-      "projectPath": "D:\\Facultate\\Licenta\\SchoolManagementSystem\\server\\server.csproj",
-      "packagesPath": "C:\\Users\\Adelin\\.nuget\\packages\\",
-      "outputPath": "D:\\Facultate\\Licenta\\SchoolManagementSystem\\server\\obj\\",
+      "projectPath": "D:\\Facultate\\Licenta\\School CRM\\kk\\SchoolManagementSystem\\server\\server.csproj",
+      "packagesPath": "C:\\Users\\aandr\\.nuget\\packages\\",
+      "outputPath": "D:\\Facultate\\Licenta\\School CRM\\kk\\SchoolManagementSystem\\server\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Adelin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\aandr\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -3057,7 +3057,6 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

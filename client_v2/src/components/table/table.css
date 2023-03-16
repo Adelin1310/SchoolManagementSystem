@@ -1,0 +1,33 @@
+@import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;800;900&display=swap);
+
+
+.TblContainer{
+    padding: 10px;
+    font-family: 'Montserrat', sans-serif;
+    color: rgb(163, 26, 255);
+    text-align: center;
+}
+
+.tableMain{
+    margin: auto;
+    background-color: lightgray;
+    border-collapse: collapse;
+    box-shadow: rgba(255, 254, 254, 0.452) 0px 1px 3px 0px, rgba(255, 255, 255, 0.349) 0px 0px 0px 1px;
+}
+
+.headRow{
+    font-weight: 500;    
+}
+.headCell{
+    font-size: large;
+    border: 1px solid #5643535e;
+    padding: 5px;
+    
+}
+
+.tableRowCell{
+    font-size: medium;
+    font-weight: 600;
+    border: 1px solid #5643535e;
+    padding: 5px;
+}
