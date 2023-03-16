@@ -9,11 +9,11 @@
 
 .profileicon:hover {
     transition-duration: .2s;
-    opacity: .7;
+    opacity: .5;
 }
 
 .profileicon>img {
     height: 50px;
     border-radius: 50px;
-    border: 2px solid rgb(163, 26, 255);
+    border: 3px solid var(--quarternaryColor);
 }

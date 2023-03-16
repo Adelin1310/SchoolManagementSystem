@@ -1,7 +1,8 @@
 export const schoolColumns = [{
     header: 'ID',
     name: 'id',
-    width: '50px'
+    width: '200px',
+    sortable: true
 },
 {
     header: 'Name',

@@ -1,33 +1,63 @@
 @import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;800;900&display=swap);
 
 
-.TblContainer{
+.TblContainer {
     padding: 10px;
     font-family: 'Montserrat', sans-serif;
-    color: rgb(163, 26, 255);
+    color: var(--tertiaryColor);
     text-align: center;
+    max-height: 80%;
+
 }
 
-.tableMain{
+.tableMain {
     margin: auto;
-    background-color: lightgray;
+    background-color: var(--quarternaryColor);
     border-collapse: collapse;
     box-shadow: rgba(255, 254, 254, 0.452) 0px 1px 3px 0px, rgba(255, 255, 255, 0.349) 0px 0px 0px 1px;
+
 }
 
-.headRow{
-    font-weight: 500;    
+tr:not(.headRow):hover {
+    cursor: pointer;
+    transition-duration: .3s;
+    background-color: var(--secondaryColor);
+    color:var(--quarternaryColor);
 }
-.headCell{
+
+.headRow {
+    font-weight: 500;
+    background-color: var(--secondaryColor);
+    color: var(--quarternaryColor);
+}
+
+.flex{
+    display: flex;
+}
+.headCell {
     font-size: large;
-    border: 1px solid #5643535e;
     padding: 5px;
-    
+    margin: auto;
 }
 
-.tableRowCell{
+.tableRowCell {
     font-size: medium;
     font-weight: 600;
-    border: 1px solid #5643535e;
-    padding: 5px;
+    border-top: 1px solid var(--secondaryColor);
+    padding: 15px;
+}
+
+.pg-btn {
+    font-size: large;
+    margin: .5rem;
+    background-color: transparent;
+    color: white;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.pg-btn.active {
+    color: var(--tertiaryColor);
+
 }

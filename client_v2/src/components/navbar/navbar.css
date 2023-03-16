@@ -9,7 +9,7 @@
     height: 100%;
     min-width: 20%;
     background-image: linear-gradient(to bottom, #2e2e2e, #272727, #212121, #1a1a1a, #141414);
-    border-right: 1px solid rgb(140, 23, 218);
+    border-right: 1px solid var(--tertiaryColor);
 }
 
 .navmenu {
@@ -24,12 +24,12 @@
 
 hr {
     width: 100%;
-    border-color: rgb(140, 23, 218);
+    border-color: var(--tertiaryColor);
     margin: 0;
 }
 
 .navmenu>li>a {
-    color: rgb(163, 26, 255);
+    color: var(--quarternaryColor);
     padding: 20px;
 }
 
@@ -54,8 +54,7 @@ hr {
 
 .navmenu>li>a:hover {
     transition-duration: .5s;
-    background-image: linear-gradient(to left, #2e2e2e, #33313a, #3a3345, #41354f, #4b3659);
-    color: white;
+    background-image: linear-gradient(to right, #cbe4de, #9fb4b0, #768684, #4f5b5a, #2c3333);
 }
 
 .logo {
@@ -63,7 +62,7 @@ hr {
     font-weight: 400;
     align-self: flex-start;
     margin-top: 0;
-    color: rgb(163, 26, 255);
+    color: var(--quarternaryColor);
     text-align: center;
     margin: 20px auto;
 }

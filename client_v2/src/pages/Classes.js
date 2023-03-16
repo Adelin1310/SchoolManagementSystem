@@ -10,7 +10,6 @@ const Classes = () => {
         async function f() {
             let response = await getAllClasses()
             setClasses(response.data.data)
-            console.log(response.data)
         }
         f()
     }, [])
@@ -18,7 +17,9 @@ const Classes = () => {
         classes !== undefined ?
             <Table
                 options={{
-                    width: '1000px'
+                    width: '1000px',
+                    sortedBy: 'Id',
+                    pageSize: 10
                 }}
                 data={classes}
                 columns={classColumns} /> : null
