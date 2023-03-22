@@ -1,64 +1,123 @@
 import React, { useEffect, useState } from 'react'
 import SortIcon from '@mui/icons-material/Sort';
 import './table.css'
+import TableColumn from './classes/TableColumns';
+import Options from './classes/Options';
+
 const Table = ({
     data,
-    columns,
-    options = {
-        sortedBy: '',
-        width: '',
-        pageSize: 10
-    }
+    columns = [new TableColumn()],
+    options = new Options()
 }) => {
     const [d, setD] = useState(undefined)
+    const [grD, setGrD] = useState(undefined)
     const [c, setC] = useState(columns)
-    const [p, setP] = useState(0)
     useEffect(() => {
         setC(columns)
-        if (options.sortedBy !== 'undefined') {
+
+        if (options.sortedBy !== '') {
             let col = options.sortedBy.toLowerCase()
             let arr = data.sort((a, b) => a[col] - b[col])
             setD(arr)
         }
 
-        let pagedarr = []
-        let n = 0
-        let j = 0
-        for (let i = 0; i < Math.ceil(data.length / options.pageSize); i++) {
-            pagedarr[i] = []
-            n += (n + options.pageSize <= data.length ? options.pageSize : data.length - n)
-            for (j; j < n; j++)
-                pagedarr[i].push(data[j])
+        if (options.groupBy !== undefined) {
+            let groups = []
+            for (let i = 0; i < data.length; i++)
+                groups.push(data[i][options.groupBy.toLowerCase()])
+            groups = [...new Set(groups)]
+            groups = groups.sort()
+            let newArr = []
+            groups.forEach(g =>
+                newArr.push({
+                    group: g,
+                    items: [],
+                }))
+            for (let j = 0; j < data.length; j++)
+                newArr.find(e => e.group === data[j][options.groupBy.toLowerCase()]).items.push(data[j])
+            setGrD(newArr)
         }
-        setD(pagedarr)
-    }, [])
 
-    const handlePageChange = (e) => {
-        setP(e.target.value - 1)
-    }
+    }, [columns, data, options])
+
+    
     return (
         <div className='TblContainer'>
             <table className='tableMain' width={options?.width !== undefined ? options?.width : '100%'}>
                 <thead>
                     <tr className='headRow'>
-                        {c?.map((col, idx) => (<td key={`col${idx}`} className='headCell'>{col.sortable === true ? <SortIcon style={{ margin: 'auto', verticalAlign: 'middle' }}>{col.header}</SortIcon> : <p>{col.header}</p>}</td>))}
+                        {c?.map((col, idx) => options.groupBy !== undefined ? (
+                            col.header.toLowerCase() !== options.groupBy.toLowerCase() ?
+                                (<td
+                                    key={`col${idx}`}
+                                    width={col.width !== undefined ? col.width : null}
+                                    className={
+                                        col.hidden ? 'headCell hidden' :
+                                            col.primary ? 'headCell primary' : 'headCell'}>
+                                    {col.sortable === true ?
+                                        <SortIcon style={{ margin: 'auto', verticalAlign: 'middle' }}>
+                                            {col.header}
+                                        </SortIcon>
+                                        :
+                                        <p>{col.header}</p>}
+                                </td>) : null) : (
+                            <td key={`col${idx}`}
+                                width={col.width !== undefined ? col.width : null}
+                                className={
+                                    col.hidden ? 'headCell hidden' :
+                                        col.primary ? 'headCell primary' : 'headCell'}>
+                                {col.sortable === true ?
+                                    <SortIcon style={{ margin: 'auto', verticalAlign: 'middle' }}>
+                                        {col.header}
+                                    </SortIcon>
+                                    :
+                                    <p>{col.header}</p>}
+                            </td>
+                        ))}
                     </tr>
                 </thead>
                 <tbody>
-                    {d !== undefined ? d[p]?.map((dt, idx) => (
+                    {d !== undefined ? grD === undefined ? d?.map((dt, idx) => (
                         <tr key={`row${idx}`}>
                             {c?.map((col, cidx) => (
-                                <td width={col.width !== undefined ? col.width : null} className='tableRowCell' key={`row${idx}col${cidx}`}>
+                                <td
+                                    width={col.width !== undefined ? col.width : null}
+                                    className={
+                                        col.hidden || col.header?.toLowerCase() === options.groupBy?.toLowerCase() ? 'tableRowCell hidden'
+                                            : col.primary ? 'tableRowCell primary' : 'tableRowCell'}
+                                    key={`row${idx}col${cidx}`}>
                                     {dt[col.name]}
                                 </td>
                             ))}
                         </tr>
-                    )) : null}
+                    )) :
+                        grD?.map((g, gidx) => (
+                            <>
+                                <tr className='groupRow' key={`row${gidx}`}>
+                                    <td
+                                        className='tableRowCell'
+                                        colSpan="100%">{g.group}</td>
+                                </tr>
+                                {g.items.map((it, itidx) => (
+                                    <tr key={`row${itidx}`}>
+                                        {c?.map((col, cidx) => (
+                                            <td
+                                                width={col.width !== undefined ? col.width : null}
+                                                className={
+                                                    col.hidden || col.header?.toLowerCase() === options.groupBy.toLowerCase() ? 'tableRowCell hidden'
+                                                        : col.primary ? 'tableRowCell primary' : 'tableRowCell'
+                                                }
+                                                key={`row${itidx}col${cidx}`}>
+                                                {it[col.name]}
+                                            </td>
+                                        ))}
+                                    </tr>
+                                ))}
+                            </>
+                        ))
+                        : null}
                 </tbody>
             </table>
-            {d !== undefined ?
-                d.map((e, idx) => (<button key={`pgbtn${idx}`} className={p === idx ? 'pg-btn active' : 'pg-btn'} value={idx + 1} onClick={handlePageChange}>{idx + 1}</button>))
-                : null}
         </div>
     )
 }

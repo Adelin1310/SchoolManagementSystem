@@ -6,18 +6,31 @@
     font-family: 'Montserrat', sans-serif;
     color: var(--tertiaryColor);
     text-align: center;
-    max-height: 80%;
-
+    height: 100%;
 }
 
 .tableMain {
+    max-width: 100%;
     margin: auto;
+    display: block;
     background-color: var(--quarternaryColor);
     border-collapse: collapse;
-    box-shadow: rgba(255, 254, 254, 0.452) 0px 1px 3px 0px, rgba(255, 255, 255, 0.349) 0px 0px 0px 1px;
-
+    max-height: 100%;
 }
-
+tbody{
+    display: block;
+    max-height: 100%;
+    overflow: auto;
+}
+thead, tbody tr{
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+th, td{
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
 tr:not(.headRow):hover {
     cursor: pointer;
     transition-duration: .3s;
@@ -25,7 +38,7 @@ tr:not(.headRow):hover {
     color:var(--quarternaryColor);
 }
 
-.headRow {
+.headRow, .groupRow {
     font-weight: 500;
     background-color: var(--secondaryColor);
     color: var(--quarternaryColor);
@@ -33,6 +46,12 @@ tr:not(.headRow):hover {
 
 .flex{
     display: flex;
+}
+.hidden{
+    display: none;
+}
+.primary{
+    text-align: left;
 }
 .headCell {
     font-size: large;

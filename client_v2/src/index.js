@@ -10,27 +10,37 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Schools from './pages/Schools';
 import Classes from './pages/Classes';
+import AddSchool from './pages/School/AddSchool';
+import AddClass from './pages/Class/AddClass';
 
 const router = createBrowserRouter([
   {
-    path:'/',
-    element:<App/>,
-    children:[
+    path: '/',
+    element: <App />,
+    children: [
       {
-        path:'schools',
-        element:<Schools/>
+        path: 'schools',
+        element: <Schools />,
       },
       {
-        path:'classes',
-        element:<Classes/>
-      }
+        path:'schools/add',
+        element:<AddSchool/>
+      },
+      {
+        path: 'classes',
+        element: <Classes />,
+      },
+      {
+        path:'classes/add',
+        element:<AddClass/>
+      },
     ]
   }
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <RouterProvider router={router}/>
+  <RouterProvider router={router} />
 );
 
 // If you want to start measuring performance in your app, pass a function

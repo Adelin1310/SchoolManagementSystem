@@ -1,0 +1,13 @@
+.btn{
+    color: var(--mainColor);
+    background-color: var(--tertiaryColor);
+    padding: 2px 20px;
+    margin: auto;
+    font-size: larger;
+    border-radius: 2px;
+}
+
+.btn:hover{
+    transition-duration: .2s;
+    background-color: var(--quarternaryColor);
+}

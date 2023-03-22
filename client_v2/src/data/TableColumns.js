@@ -1,34 +1,38 @@
-export const schoolColumns = [{
-    header: 'ID',
-    name: 'id',
-    width: '200px',
-    sortable: true
-},
-{
-    header: 'Name',
-    name: 'name'
-}]
+import TableColumn from "../components/table/classes/TableColumns"
+
+export const schoolColumns = [
+    new TableColumn({
+        header: 'ID',
+        name: 'id',
+        width: '30px !important',
+    }),
+    new TableColumn(
+        {
+            header: 'Name',
+            name: 'name'
+        })]
 
 export const classColumns = [
-    {
-        header: 'ID',
-        name: "id",
-        width: '50px'
-
-    },
-    {
-        header: 'Name',
-        name: "name",
-        width: '200px'
-    },
-    {
+    new TableColumn(
+        {
+            header: 'ID',
+            name: "id",
+            width: '30px !important',
+        }),
+    new TableColumn(
+        {
+            header: 'Name',
+            name: "name",
+            width: '200px'
+        }),
+    new TableColumn({
         header: 'School',
         name: "school"
-    },
-    {
+    }),
+    new TableColumn({
         header: 'School ID',
         name: "schoolId",
-        width: '100px'
-
-    }
+        width: '100px',
+        hidden: true,
+    })
 ]

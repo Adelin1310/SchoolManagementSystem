@@ -6,16 +6,23 @@ import { schoolColumns } from '../data/TableColumns'
 const Schools = () => {
   const [schools, setSchools] = useState(undefined)
 
-  useEffect(()=>{
-    async function f(){
-      let response =await getAllSchools()
+  useEffect(() => {
+    async function f() {
+      let response = await getAllSchools()
       setSchools(response.data.data)
-      console.log(response.data)
     }
     f()
-  },[])
+  }, [])
   return (
-    <div>{schools !== undefined ? <Table data={schools} columns={schoolColumns}/> : null}</div>
+    schools !== undefined ?
+      <Table
+        data={schools}
+        columns={schoolColumns}
+        options={{
+          width: '100%',
+          sortedBy: 'Id',
+          pageSize: 10,
+        }} /> : null
   )
 }
 

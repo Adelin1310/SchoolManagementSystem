@@ -18,7 +18,8 @@ namespace server.Controllers
             _service = service;
         }
         [HttpDelete("DeleteSchoolById")]
-        public async Task<ActionResult<object>> DeleteSchoolById(int schoolId){
+        public async Task<ActionResult<object>> DeleteSchoolById(int schoolId)
+        {
             var res = await _service.DeleteSchoolById(schoolId);
             return res;
         }
@@ -26,10 +27,14 @@ namespace server.Controllers
         public async Task<ActionResult<SR<List<GetSchoolDto>>>> GetAllSchools()
         {
             var res = await _service.GetAllSchools();
-            return res;
+            if (res.StatusCode == StatusCodes.Status200OK)
+                return Ok(res);
+            else
+                return BadRequest(res);
         }
         [HttpGet("GetAllSchoolsWithClasses")]
-        public async Task<ActionResult<SR<List<object>>>> GetAllSchoolsWithClasses(){
+        public async Task<ActionResult<SR<List<object>>>> GetAllSchoolsWithClasses()
+        {
             var res = await _service.GetAllSchoolsWithClasses();
             return res;
         }
@@ -40,12 +45,14 @@ namespace server.Controllers
             return res;
         }
         [HttpPost("AddSchool")]
-        public async Task<ActionResult<SR<GetSchoolDto>>> AddSchool(AddSchoolDto newSchool){
+        public async Task<ActionResult<SR<GetSchoolDto>>> AddSchool(AddSchoolDto newSchool)
+        {
             var res = await _service.AddSchool(newSchool);
             return res;
         }
         [HttpPut("UpdateSchoolById")]
-        public async Task<ActionResult<SR<GetSchoolDto>>> UpdateSchoolById(int schoolId, UpdateSchoolDto updatedSchool){
+        public async Task<ActionResult<SR<GetSchoolDto>>> UpdateSchoolById(int schoolId, UpdateSchoolDto updatedSchool)
+        {
             var res = await _service.UpdateSchoolById(schoolId, updatedSchool);
             return res;
         }
