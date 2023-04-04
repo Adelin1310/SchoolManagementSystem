@@ -2,10 +2,12 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './button.css'
 
-const Button = ({to, value}) => {
+const Button = ({ to, value }) => {
   return (
-    <Link className='btn' to={to}>{value}</Link>
-    )
+    <div className='btn'>
+      <Link to={to}>{value}</Link>
+    </div>
+  )
 }
 
 export default Button

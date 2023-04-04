@@ -1,19 +1,26 @@
 :root {
-  --mainColor: #2C3333;
-  --secondaryColor: #2E4F4F;
-  --tertiaryColor: #0E8388;
-  --quarternaryColor: #CBE4DE;
+  --mainColor: #fbfbff;
+  --secondaryColor: #3185FC;
+  --secondaryColorLight: #599dfc;
+  --alternateColor: #031927;
+  --borderColor: #F58F29;
+  --textColor: #ffffff;
+  --hoverTextColor:#9191E9;
+  --btnHoverColor: #293241;
 }
 
-body {
-  background-color: var(--mainColor);
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+[data-theme='dark'] {
+  --mainColor: #293241;
+  --secondaryColor: #3d5a80;
+  --secondaryColorLight: #667485;
+  --alternateColor: #6396da;
+  --borderColor: #ee6c4d;
+  --textColor: #c8e3f3;
+  --hoverTextColor:#e2f1fa;
+  --btnHoverColor: #fbfbff;
 }
+
+
 
 * {
   box-sizing: border-box;

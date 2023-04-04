@@ -15,5 +15,5 @@
 .profileicon>img {
     height: 50px;
     border-radius: 50px;
-    border: 3px solid var(--quarternaryColor);
+    border: 3px solid var(--textColor);
 }

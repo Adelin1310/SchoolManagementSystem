@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getAllSchools } from '../api/Schools'
+import Actions from '../components/actions/Actions'
 import Table from '../components/table/Table'
 import { schoolColumns } from '../data/TableColumns'
 
@@ -14,15 +15,14 @@ const Schools = () => {
     f()
   }, [])
   return (
-    schools !== undefined ?
-      <Table
-        data={schools}
-        columns={schoolColumns}
-        options={{
-          width: '100%',
-          sortedBy: 'Id',
-          pageSize: 10,
-        }} /> : null
+    <div>
+      <Actions />
+      {schools !== undefined ?
+        <Table
+          data={schools}
+          columns={schoolColumns}
+        /> : null}
+    </div>
   )
 }
 
