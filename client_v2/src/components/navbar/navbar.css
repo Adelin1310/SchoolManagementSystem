@@ -1,15 +1,29 @@
 @import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;800;900&display=swap);
 
 
+.themeBtns{
+    display: flex;
+    margin: auto;
+    margin-bottom: 50px;
+    width: fit-content;
+}
+
+.icon{
+    color:var(--textColor);
+}
 
 .container {
     font-family: 'Montserrat', sans-serif;
-
+    transition-duration: .5s;
     position: absolute;
+    display: flex;
+    flex-direction: column;
     height: 100%;
-    min-width: 20%;
-    background-image: linear-gradient(to bottom, #2e2e2e, #272727, #212121, #1a1a1a, #141414);
-    border-right: 1px solid var(--tertiaryColor);
+    min-width: 12%;
+    background-color: var(--secondaryColor);
+    border-right: 1px solid var(--borderColor);
+    animation: slideRight .5s;
+    z-index: 1;
 }
 
 .navmenu {
@@ -17,19 +31,16 @@
     height: 50%;
     flex-direction: column;
     margin: auto;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
     list-style-type: none;
     padding: 0;
     align-items: center;
 }
 
-hr {
-    width: 100%;
-    border-color: var(--tertiaryColor);
-    margin: 0;
-}
-
 .navmenu>li>a {
-    color: var(--quarternaryColor);
+    color: var(--textColor);
     padding: 20px;
 }
 
@@ -42,6 +53,7 @@ hr {
     font-weight: 400;
     cursor: pointer;
     text-align: center;
+    margin-top: 10px;
 }
 
 .navmenu>li>a {
@@ -50,11 +62,17 @@ hr {
     align-items: center;
     width: 100%;
     height: 100%;
+    border-radius: 10px;
+    margin: 5px 8px;
 }
 
 .navmenu>li>a:hover {
     transition-duration: .5s;
-    background-image: linear-gradient(to right, #cbe4de, #9fb4b0, #768684, #4f5b5a, #2c3333);
+    background-color: var(--borderColor);
+}
+
+.active{
+    background-color: var(--borderColor);
 }
 
 .logo {
@@ -62,7 +80,27 @@ hr {
     font-weight: 400;
     align-self: flex-start;
     margin-top: 0;
-    color: var(--quarternaryColor);
+    color: var(--textColor);
     text-align: center;
     margin: 20px auto;
+}
+
+.hide {
+    animation: slideLeft .5s forwards;
+}
+
+@keyframes slideRight {
+    from{
+        left:-450px;
+    }
+    to{
+        left:0px;
+    }
+}
+
+@keyframes slideLeft {
+    from{
+        left:0px;
+    }
+    to{left: -450px;}
 }

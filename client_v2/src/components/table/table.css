@@ -4,55 +4,95 @@
 .TblContainer {
     padding: 10px;
     font-family: 'Montserrat', sans-serif;
-    color: var(--tertiaryColor);
+    color: var(--textColor);
     text-align: center;
     height: 100%;
+    border-radius: 5px;
+    transition-duration: .5s;
 }
-
 .tableMain {
     max-width: 100%;
     margin: auto;
     display: block;
-    background-color: var(--quarternaryColor);
-    border-collapse: collapse;
+    background-color: var(--secondaryColor);
+    border-collapse: separate;
+    border-spacing: 0;
     max-height: 100%;
+    border-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
-tbody{
+
+tbody {
     display: block;
     max-height: 100%;
-    overflow: auto;
+    overflow-y: scroll;
+    padding: 10px;
 }
-thead, tbody tr{
+
+thead,
+tbody tr {
     display: table;
     table-layout: fixed;
     width: 100%;
+    margin: 5px 0;
 }
-th, td{
+thead tr th{
+    padding: 20px 5px !important;
+}
+th,
+td {
     padding-left: 15px !important;
     padding-right: 15px !important;
 }
+
+tr:not(.headRow) {
+    border-radius: 10px;
+    color:var(--btnHoverColor);
+}
+
 tr:not(.headRow):hover {
     cursor: pointer;
     transition-duration: .3s;
-    background-color: var(--secondaryColor);
-    color:var(--quarternaryColor);
+    background-color: var(--borderColor) !important;
+    color: var(--alternateColor) !important;
 }
 
-.headRow, .groupRow {
+tr .headCell:first-child {
+    border-top-left-radius: 5px;
+}
+
+tr .headCell:last-child {
+    border-top-right-radius: 5px;
+}
+
+.headRow,
+.groupRow {
     font-weight: 500;
-    background-color: var(--secondaryColor);
-    color: var(--quarternaryColor);
+    background-color: var(--borderColor);
+    color: var(--btnHoverColor);
 }
-
-.flex{
+.groupRow{
+    background-color: var(--secondaryColorLight) !important;
+    color: var(--textColor) !important;
+}
+.flex {
     display: flex;
 }
-.hidden{
+
+.hidden {
     display: none;
 }
-.primary{
+.flexHeader{
+    display: flex;
+    margin: auto;
+    width: fit-content;
+}
+
+.primary {
     text-align: left;
 }
+
 .headCell {
     font-size: large;
     padding: 5px;
@@ -60,9 +100,9 @@ tr:not(.headRow):hover {
 }
 
 .tableRowCell {
+    text-align: center;
     font-size: medium;
     font-weight: 600;
-    border-top: 1px solid var(--secondaryColor);
     padding: 15px;
 }
 
@@ -77,6 +117,6 @@ tr:not(.headRow):hover {
 }
 
 .pg-btn.active {
-    color: var(--tertiaryColor);
+    color: var(--borderColor);
 
 }

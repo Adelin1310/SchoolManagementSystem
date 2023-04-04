@@ -1,125 +1,83 @@
-import React, { useEffect, useState } from 'react'
-import SortIcon from '@mui/icons-material/Sort';
+
+import React, { useMemo } from "react";
+import { Link } from "react-router-dom";
+import { useTable, useSortBy, useGroupBy, useExpanded } from "react-table";
 import './table.css'
-import TableColumn from './classes/TableColumns';
-import Options from './classes/Options';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import FilterListOffIcon from '@mui/icons-material/FilterListOff';
 
-const Table = ({
-    data,
-    columns = [new TableColumn()],
-    options = new Options()
-}) => {
-    const [d, setD] = useState(undefined)
-    const [grD, setGrD] = useState(undefined)
-    const [c, setC] = useState(columns)
-    useEffect(() => {
-        setC(columns)
+function Table({ columns, data, onDelete }) {
+  const memoizedColumns = useMemo(() => columns, [columns]);
+  const memoizedData = useMemo(() => data, [data]);
+  const tableMaxHeight = window.screen.availHeight * .65;
 
-        if (options.sortedBy !== '') {
-            let col = options.sortedBy.toLowerCase()
-            let arr = data.sort((a, b) => a[col] - b[col])
-            setD(arr)
-        }
+  const tableInstance = useTable(
+    { columns: memoizedColumns, data: memoizedData },
+    useGroupBy,
+    useSortBy,
+    useExpanded
+  );
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
 
-        if (options.groupBy !== undefined) {
-            let groups = []
-            for (let i = 0; i < data.length; i++)
-                groups.push(data[i][options.groupBy.toLowerCase()])
-            groups = [...new Set(groups)]
-            groups = groups.sort()
-            let newArr = []
-            groups.forEach(g =>
-                newArr.push({
-                    group: g,
-                    items: [],
-                }))
-            for (let j = 0; j < data.length; j++)
-                newArr.find(e => e.group === data[j][options.groupBy.toLowerCase()]).items.push(data[j])
-            setGrD(newArr)
-        }
-
-    }, [columns, data, options])
-
-    
-    return (
-        <div className='TblContainer'>
-            <table className='tableMain' width={options?.width !== undefined ? options?.width : '100%'}>
-                <thead>
-                    <tr className='headRow'>
-                        {c?.map((col, idx) => options.groupBy !== undefined ? (
-                            col.header.toLowerCase() !== options.groupBy.toLowerCase() ?
-                                (<td
-                                    key={`col${idx}`}
-                                    width={col.width !== undefined ? col.width : null}
-                                    className={
-                                        col.hidden ? 'headCell hidden' :
-                                            col.primary ? 'headCell primary' : 'headCell'}>
-                                    {col.sortable === true ?
-                                        <SortIcon style={{ margin: 'auto', verticalAlign: 'middle' }}>
-                                            {col.header}
-                                        </SortIcon>
-                                        :
-                                        <p>{col.header}</p>}
-                                </td>) : null) : (
-                            <td key={`col${idx}`}
-                                width={col.width !== undefined ? col.width : null}
-                                className={
-                                    col.hidden ? 'headCell hidden' :
-                                        col.primary ? 'headCell primary' : 'headCell'}>
-                                {col.sortable === true ?
-                                    <SortIcon style={{ margin: 'auto', verticalAlign: 'middle' }}>
-                                        {col.header}
-                                    </SortIcon>
-                                    :
-                                    <p>{col.header}</p>}
-                            </td>
-                        ))}
-                    </tr>
-                </thead>
-                <tbody>
-                    {d !== undefined ? grD === undefined ? d?.map((dt, idx) => (
-                        <tr key={`row${idx}`}>
-                            {c?.map((col, cidx) => (
-                                <td
-                                    width={col.width !== undefined ? col.width : null}
-                                    className={
-                                        col.hidden || col.header?.toLowerCase() === options.groupBy?.toLowerCase() ? 'tableRowCell hidden'
-                                            : col.primary ? 'tableRowCell primary' : 'tableRowCell'}
-                                    key={`row${idx}col${cidx}`}>
-                                    {dt[col.name]}
-                                </td>
-                            ))}
-                        </tr>
-                    )) :
-                        grD?.map((g, gidx) => (
-                            <>
-                                <tr className='groupRow' key={`row${gidx}`}>
-                                    <td
-                                        className='tableRowCell'
-                                        colSpan="100%">{g.group}</td>
-                                </tr>
-                                {g.items.map((it, itidx) => (
-                                    <tr key={`row${itidx}`}>
-                                        {c?.map((col, cidx) => (
-                                            <td
-                                                width={col.width !== undefined ? col.width : null}
-                                                className={
-                                                    col.hidden || col.header?.toLowerCase() === options.groupBy.toLowerCase() ? 'tableRowCell hidden'
-                                                        : col.primary ? 'tableRowCell primary' : 'tableRowCell'
-                                                }
-                                                key={`row${itidx}col${cidx}`}>
-                                                {it[col.name]}
-                                            </td>
-                                        ))}
-                                    </tr>
-                                ))}
-                            </>
-                        ))
-                        : null}
-                </tbody>
-            </table>
-        </div>
-    )
+  return (
+    <table className="tableMain" {...getTableProps()}>
+      <thead>
+        {headerGroups.map((headerGroup) => (
+          <tr className="headRow" {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map((column) => (
+              <th className="headCell" {...column.getHeaderProps(column.getSortByToggleProps())}>
+                <div className="flexHeader">
+                  {column.render("Header")}
+                  <span>{column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : ""}</span>
+                  {column.canGroupBy ? (
+                    <span {...column.getGroupByToggleProps()}>
+                      {column.isGrouped ? <FilterListOffIcon /> : <FilterListIcon />}
+                    </span>
+                  ) : null}
+                </div>
+              </th>
+            ))}
+            <th className="headCell">Actions</th>
+          </tr>
+        ))}
+      </thead>
+      <tbody style={{ maxHeight: `${tableMaxHeight}px` }} {...getTableBodyProps()}>
+        {rows.map((row) => {
+          prepareRow(row);
+          return (
+            <tr className={row.subRows.length > 0 ? "groupRow" : null} {...row.getRowProps()}>
+              {row.cells.map((cell) => (
+                <td className={"tableRowCell"} {...cell.getCellProps()}>
+                  {cell.isGrouped ? (
+                    <>
+                      <span {...row.getToggleRowExpandedProps()}>
+                        {row.isExpanded ? '👇' : '👉'}
+                      </span>{' '}
+                      {cell.render('Cell')} ({row.subRows.length})
+                    </>
+                  ) : cell.isAggregated ? (
+                    cell.render('Aggregated')
+                  ) : cell.isPlaceholder ? null : (
+                    cell.render('Cell')
+                  )}
+                </td>
+              ))}
+              <td className="tableRowCell">
+                {row.subRows.length > 0 ?
+                  null
+                  :
+                  (<React.Fragment>
+                    <button onClick={() => onDelete(row.original)}>Delete</button>
+                    <Link to={`${row.cells[0].value}`}>View</Link>
+                  </React.Fragment>
+                  )}
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
 }
 
-export default Table
+export default Table;

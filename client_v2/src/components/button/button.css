@@ -1,13 +1,17 @@
 .btn{
-    color: var(--mainColor);
-    background-color: var(--tertiaryColor);
-    padding: 2px 20px;
-    margin: auto;
+    display: flex;
+    align-items: center;
+    color: var(--textColor);
+    background-color: var(--secondaryColor);
     font-size: larger;
     border-radius: 2px;
 }
-
+.btn a{
+    margin: auto;
+    text-decoration: none;
+    color: var(--textColor);
+}
 .btn:hover{
     transition-duration: .2s;
-    background-color: var(--quarternaryColor);
+    background-color: var(--btnHoverColor);
 }
