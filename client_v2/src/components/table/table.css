@@ -1,33 +1,122 @@
 @import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;800;900&display=swap);
 
 
-.TblContainer{
+.TblContainer {
     padding: 10px;
     font-family: 'Montserrat', sans-serif;
-    color: rgb(163, 26, 255);
+    color: var(--textColor);
     text-align: center;
+    height: 100%;
+    border-radius: 5px;
+    transition-duration: .5s;
 }
-
-.tableMain{
+.tableMain {
+    max-width: 100%;
     margin: auto;
-    background-color: lightgray;
-    border-collapse: collapse;
-    box-shadow: rgba(255, 254, 254, 0.452) 0px 1px 3px 0px, rgba(255, 255, 255, 0.349) 0px 0px 0px 1px;
+    display: block;
+    background-color: var(--secondaryColor);
+    border-collapse: separate;
+    border-spacing: 0;
+    max-height: 100%;
+    border-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
-.headRow{
-    font-weight: 500;    
+tbody {
+    display: block;
+    max-height: 100%;
+    overflow-y: scroll;
+    padding: 10px;
 }
-.headCell{
+
+thead,
+tbody tr {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    margin: 5px 0;
+}
+thead tr th{
+    padding: 20px 5px !important;
+}
+th,
+td {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+}
+
+tr:not(.headRow) {
+    border-radius: 10px;
+    color:var(--btnHoverColor);
+}
+
+tr:not(.headRow):hover {
+    cursor: pointer;
+    transition-duration: .3s;
+    background-color: var(--borderColor) !important;
+    color: var(--alternateColor) !important;
+}
+
+tr .headCell:first-child {
+    border-top-left-radius: 5px;
+}
+
+tr .headCell:last-child {
+    border-top-right-radius: 5px;
+}
+
+.headRow,
+.groupRow {
+    font-weight: 500;
+    background-color: var(--borderColor);
+    color: var(--btnHoverColor);
+}
+.groupRow{
+    background-color: var(--secondaryColorLight) !important;
+    color: var(--textColor) !important;
+}
+.flex {
+    display: flex;
+}
+
+.hidden {
+    display: none;
+}
+.flexHeader{
+    display: flex;
+    margin: auto;
+    width: fit-content;
+}
+
+.primary {
+    text-align: left;
+}
+
+.headCell {
     font-size: large;
-    border: 1px solid #5643535e;
     padding: 5px;
-    
+    margin: auto;
 }
 
-.tableRowCell{
+.tableRowCell {
+    text-align: center;
     font-size: medium;
     font-weight: 600;
-    border: 1px solid #5643535e;
-    padding: 5px;
+    padding: 15px;
+}
+
+.pg-btn {
+    font-size: large;
+    margin: .5rem;
+    background-color: transparent;
+    color: white;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.pg-btn.active {
+    color: var(--borderColor);
+
 }

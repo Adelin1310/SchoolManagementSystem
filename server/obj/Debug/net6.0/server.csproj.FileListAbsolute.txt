@@ -196,3 +196,8 @@ D:\Facultate\Licenta\School CRM\kk\SchoolManagementSystem\server\obj\Debug\net6.
 D:\Facultate\Licenta\School CRM\kk\SchoolManagementSystem\server\obj\Debug\net6.0\server.pdb
 D:\Facultate\Licenta\School CRM\kk\SchoolManagementSystem\server\obj\Debug\net6.0\server.genruntimeconfig.cache
 D:\Facultate\Licenta\School CRM\kk\SchoolManagementSystem\server\obj\Debug\net6.0\ref\server.dll
+D:\Facultate\Licenta\SchoolManagementSystem\server\obj\Debug\net6.0\staticwebassets\msbuild.server.Microsoft.AspNetCore.StaticWebAssets.props
+D:\Facultate\Licenta\SchoolManagementSystem\server\obj\Debug\net6.0\staticwebassets\msbuild.build.server.props
+D:\Facultate\Licenta\SchoolManagementSystem\server\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.server.props
+D:\Facultate\Licenta\SchoolManagementSystem\server\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.server.props
+D:\Facultate\Licenta\SchoolManagementSystem\server\obj\Debug\net6.0\staticwebassets.pack.json

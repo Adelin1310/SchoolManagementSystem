@@ -1,33 +1,119 @@
-export const schoolColumns = [{
-    header: 'ID',
-    name: 'id',
-    width: '50px'
-},
-{
-    header: 'Name',
-    name: 'name'
-}]
+
+export const schoolColumns = [
+    {
+        Header: 'ID',
+        accessor: 'id',
+
+    },
+
+    {
+        Header: 'Name',
+        accessor: 'name'
+    }]
 
 export const classColumns = [
-    {
-        header: 'ID',
-        name: "id",
-        width: '50px'
 
-    },
     {
-        header: 'Name',
-        name: "name",
-        width: '200px'
+        Header: 'ID',
+        accessor: "id",
     },
-    {
-        header: 'School',
-        name: "school"
-    },
-    {
-        header: 'School ID',
-        name: "schoolId",
-        width: '100px'
 
+    {
+        Header: 'Name',
+        accessor: "name",
+    },
+    {
+        Header: 'School',
+        accessor: "school"
+    },
+    {
+        Header: 'School ID',
+        accessor: "schoolId",
     }
+]
+
+export const studentColumns = [
+    {
+        Header:'ID',
+        accessor:'id'
+    },
+    {
+        Header:'   ',
+        accessor:'photo',
+        Cell: ({value})=>(<img style={{width:'64px', borderRadius:'50%'}} alt='' src={`${value}`}/>),
+        disableGroupBy: true
+
+    },
+    {
+        Header:'Full Name',
+        accessor:'fullName'
+    },
+    {
+        Header:'First Name',
+        accessor:'firstName'
+    },
+    {
+        Header:'LastName',
+        accessor:'lastName'
+    },
+    {
+        Header:'Address',
+        accessor:'address'
+    },
+    {
+        Header:'Class',
+        accessor:'class'
+    },
+    {
+        Header:'School',
+        accessor:'school'
+    },
+    
+]
+
+export const teachersColumns = [
+    {
+        Header:'ID',
+        accessor:'id',
+    },
+    {
+        Header:'Full Name',
+        accessor:'fullName',
+    },
+    {
+        Header:'First Name',
+        accessor:'firstName',
+    },
+    {
+        Header:'Last Name',
+        accessor:'lastName',
+    },
+    {
+        Header:'Address',
+        accessor:'address',
+    },
+    {
+        Header:'Age',
+        accessor:'age',
+    },
+    {
+        Header:'Schools',
+        accessor:'schools',
+        Cell: ({value})=>value.map(v=><p className="school">{v}</p>),
+    },
+    {
+        Header:'Subjects',
+        accessor:'subjects',
+        Cell: ({value})=>value.map(v=><p className="subject">{v}</p>),
+    },
+]
+export const subjectsColumns = [
+    {
+        Header:'ID',
+        accessor:'id',
+    },
+    {
+        Header:'Name',
+        accessor:'name',
+    },
 ]

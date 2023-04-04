@@ -10,27 +10,64 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Schools from './pages/Schools';
 import Classes from './pages/Classes';
+import AddSchool from './pages/School/AddSchool';
+import AddClass from './pages/Class/AddClass';
+import Students from './pages/Students';
+import Teachers from './pages/Teachers';
+import Subjects from './pages/Subjects';
 
 const router = createBrowserRouter([
   {
-    path:'/',
-    element:<App/>,
-    children:[
+    path: '/',
+    element: <App />,
+    children: [
       {
-        path:'schools',
-        element:<Schools/>
+        path: 'schools',
+        element: <Schools />,
       },
       {
-        path:'classes',
-        element:<Classes/>
-      }
+        path:'schools/add',
+        element:<AddSchool/>
+      },
+      {
+        path: 'classes',
+        element: <Classes />,
+      },
+      {
+        path:'classes/add',
+        element:<AddClass/>
+      },
+      {
+        path: 'students',
+        element: <Students />,
+      },
+      {
+        path:'students/add',
+        element:<AddClass/>
+      },
+      {
+        path: 'teachers',
+        element: <Teachers />,
+      },
+      {
+        path:'teachers/add',
+        element:<AddClass/>
+      },
+      {
+        path: 'subjects',
+        element: <Subjects />,
+      },
+      {
+        path:'subjects/add',
+        element:<AddClass/>
+      },
     ]
   }
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <RouterProvider router={router}/>
+  <RouterProvider router={router} />
 );
 
 // If you want to start measuring performance in your app, pass a function

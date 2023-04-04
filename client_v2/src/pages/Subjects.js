@@ -1,22 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { deleteClassById, getAllClasses } from '../api/Class'
 import Actions from '../components/actions/Actions'
 import Table from '../components/table/Table'
-import { classColumns } from '../data/TableColumns'
+import { subjectsColumns } from '../data/TableColumns'
+import { deleteSubjectById, getAllSubjects } from '../api/Subjects'
 
-const Classes = () => {
-    const [classes, setClasses] = useState(undefined)
+const Subjects = () => {
+    const [subjects, setSubjects] = useState(undefined)
 
     useEffect(() => {
         async function f() {
-            let response = await getAllClasses()
-            setClasses(response.data.data)
+            let response = await getAllSubjects()
+            setSubjects(response.data.data)
+            console.log(response)
         }
         f()
     }, [])
 
     const onDelete = async (id) => {
-        let res = await deleteClassById(id)
+        let res = await deleteSubjectById(id)
         if (res.data.success)
             return res.data.message
         else
@@ -27,14 +28,14 @@ const Classes = () => {
         <div>
             <Actions/>
             {
-                classes !== undefined ?
+                subjects !== undefined ?
                     <Table
-                        data={classes}
-                        columns={classColumns}
+                        data={subjects}
+                        columns={subjectsColumns}
                         onDelete={onDelete} /> : null
             }
         </div>
     )
 }
 
-export default Classes
+export default Subjects
