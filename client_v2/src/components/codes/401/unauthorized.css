@@ -1,0 +1,9 @@
+.unauthorized{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    color:var(--btnHoverColor);
+    height: 100%;
+}

@@ -9,6 +9,6 @@ namespace server.Models
     {
         public int Id { get; set; }
         public int ClassId { get; set; }
-        public dbo_Class Class { get; set; }
+        public dbo_Class Class { get; set; } = new dbo_Class();
     }
 }

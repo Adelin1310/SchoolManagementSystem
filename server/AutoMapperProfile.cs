@@ -13,6 +13,7 @@ using server.Dtos.Student;
 using server.Dtos.Subject;
 using server.Dtos.Teacher;
 using server.Dtos.TeacherSubject;
+using server.Dtos.User;
 using server.Models;
 
 namespace server
@@ -51,6 +52,8 @@ namespace server
                 .ForMember(x=>x.FullName, opt=>opt.MapFrom(y=>y.FirstName + " " + y.LastName));
             CreateMap<dbo_Teacher, GetTeacherWSchoolsAndSubjectsDto>()
                 .ForMember(x=>x.FullName, opt=>opt.MapFrom(y=>y.FirstName + " " + y.LastName));
+            CreateMap<dbo_User, GetUserDto>()
+                .ForMember(x=>x.Role, opt=>opt.MapFrom(y=>y.Role.Name));
         }
     }
 }

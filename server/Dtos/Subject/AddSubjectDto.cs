@@ -7,6 +7,6 @@ namespace server.Dtos.Subject
 {
     public class AddSubjectDto
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
     }
 }

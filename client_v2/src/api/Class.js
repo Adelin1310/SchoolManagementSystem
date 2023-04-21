@@ -1,5 +1,5 @@
 import axios from 'axios'
-const controller = 'https://localhost:7055/api/Class/';
+const controller = 'http://localhost:7055/api/Class/';
 
 
 export const getAllClasses = async () => {

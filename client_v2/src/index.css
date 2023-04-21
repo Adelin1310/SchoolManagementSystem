@@ -1,23 +1,29 @@
+@import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;800;900&display=swap);
+
 :root {
   --mainColor: #fbfbff;
+  --mainColorDark: #dddde0;
   --secondaryColor: #3185FC;
-  --secondaryColorLight: #599dfc;
+  --secondaryColorLight: #72acfd;
   --alternateColor: #031927;
   --borderColor: #F58F29;
   --textColor: #ffffff;
-  --hoverTextColor:#9191E9;
+  --hoverTextColor: #9191E9;
   --btnHoverColor: #293241;
+  --defaultFont: font-family: 'Montserrat', sans-serif;
 }
 
 [data-theme='dark'] {
   --mainColor: #293241;
+  --mainColorDark: #dddde0;
   --secondaryColor: #3d5a80;
   --secondaryColorLight: #667485;
-  --alternateColor: #6396da;
-  --borderColor: #ee6c4d;
-  --textColor: #c8e3f3;
-  --hoverTextColor:#e2f1fa;
+  --alternateColor: #ffffff;
+  --borderColor: #500404;
+  --textColor: #f8f8f8;
+  --hoverTextColor: #e2f1fa;
   --btnHoverColor: #fbfbff;
+  --defaultFont: font-family: 'Montserrat', sans-serif;
 }
 
 

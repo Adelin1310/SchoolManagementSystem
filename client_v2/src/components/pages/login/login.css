@@ -1,0 +1,97 @@
+.login {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    height: 100vh;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--mainColor);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--alternateColor);
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 1px gray;
+    color: var(--mainColor);
+}
+
+.login-container p {
+    font-size: 25px;
+    margin: 40px 80px 20px 80px;
+    font-weight: 400;
+    color: var(--mainColor);
+}
+
+.login-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    margin-bottom: 40px;
+    width: 75%;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin: 5px 0;
+    width: 100%;
+
+}
+
+.form-group label {
+    font-size: small;
+    display: flex;
+}
+
+.form-group input[type="password"]::placeholder,
+.form-group input[type="email"]::placeholder {
+    color: var(--mainColor);
+    opacity: .9;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.form-group input[type="password"],
+.form-group input[type="email"] {
+    padding: 3px;
+    border-radius: 3px;
+    outline: none;
+    border: 1px solid transparent;
+    border-bottom: 1px solid var(--mainColor);
+    background-color: transparent;
+    margin: 4px auto;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--mainColor);
+    width: 100%;
+}
+
+.form-group input[type="password"]:focus,
+.form-group input[type="email"]:focus {
+    border: 1px solid transparent;
+    border: 1px solid var(--mainColor);
+    transition-duration: .5s;
+}
+
+.login-container form button[type="submit"] {
+    background-color: var(--secondaryColor);
+    color: var(--textColor);
+    outline: none;
+    border: none;
+    border-radius: 2px;
+    padding: 6px 9px;
+    font-size: medium;
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 15px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.login-container form button[type="submit"]:hover{
+    background-color: var(--secondaryColorLight);
+    transition-duration: .3s;
+}

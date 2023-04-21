@@ -7,6 +7,6 @@ namespace server.Dtos.School
 {
     public class UpdateSchoolDto
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
     }
 }

@@ -8,8 +8,8 @@ namespace server.Models
     public class dbo_Class
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public int SchoolId { get; set; }
-        public dbo_School School { get; set; }
+        public dbo_School School { get; set; } = new dbo_School();
     }
 }

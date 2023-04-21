@@ -1,5 +1,5 @@
 import axios from 'axios'
-const controller = 'https://localhost:7055/api/Subject/';
+const controller = 'http://localhost:7055/api/Subject/';
 
 
 

@@ -15,12 +15,19 @@ import AddClass from './pages/Class/AddClass';
 import Students from './pages/Students';
 import Teachers from './pages/Teachers';
 import Subjects from './pages/Subjects';
+import Unauthorized from './components/codes/401/Unauthorized';
+import NotFound from './components/codes/404/NotFound';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement:<NotFound/>,
     children: [
+      {
+        path:'unauthorized',
+        element:<Unauthorized/>
+      },
       {
         path: 'schools',
         element: <Schools />,
