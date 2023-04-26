@@ -37,3 +37,12 @@ export const logout = async () => {
         console.log(err)
     }
 }
+
+export const getProfile = async (role) => {
+    try {
+        const res = await axios.get(controller + `get${role}Profile`, { withCredentials: true })
+        return res.data;
+    } catch (err) {
+        console.log(err)
+    }
+}

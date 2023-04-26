@@ -12,9 +12,11 @@ namespace server.Models
         public string LastName { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
         public int ClassId { get; set; }
-        public dbo_Class Class { get; set; } = new dbo_Class();
+        public dbo_Class Class { get; set; }
         public int SchoolId { get; set; }
-        public dbo_School School { get; set; } = new dbo_School();
+        public dbo_School School { get; set; }
+        public int UserId { get; set; }
+        public dbo_User User { get; set; }
         public string? Photo { get; set; }
     }
 }

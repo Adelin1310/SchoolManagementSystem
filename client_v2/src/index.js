@@ -15,20 +15,22 @@ import AddClass from './pages/Class/AddClass';
 import Students from './pages/Students';
 import Teachers from './pages/Teachers';
 import Subjects from './pages/Subjects';
-import Unauthorized from './components/codes/401/Unauthorized';
-import NotFound from './components/codes/404/NotFound';
+import RootBoundary from './components/codes/RootBoundary';
+import { getAllSchools } from './api/Schools';
+import Profile from './pages/Profile';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    errorElement:<NotFound/>,
+    errorElement:<RootBoundary/>,
     children: [
       {
-        path:'unauthorized',
-        element:<Unauthorized/>
+        path:'profile',
+        element:<Profile/>
       },
       {
+        loader: getAllSchools,
         path: 'schools',
         element: <Schools />,
       },

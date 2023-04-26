@@ -62,8 +62,27 @@ namespace server.Services
             var res = new SR<List<GetSchoolDto>>();
             try
             {
+
                 res.Data = await _context.dbo_School
                         .Select(x => _mapper.Map<GetSchoolDto>(x))
+                        .ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                res.Message = ex.Message;
+                res.Success = false;
+            }
+            return res;
+        }
+        public async Task<SR<List<GetSchoolDto>>> GetAllSchoolsByTeacherId(int teacherId)
+        {
+            var res = new SR<List<GetSchoolDto>>();
+            try
+            {
+                var schools_teacher = await _context.dbo_SchoolTeacher.Where(s_t => s_t.TeacherId == teacherId).ToListAsync();
+                res.Data = await _context.dbo_School
+                        .Select(x => _mapper.Map<GetSchoolDto>(x))
+                        .Where(x => schools_teacher.Exists(s_t => s_t.SchoolId == x.Id))
                         .ToListAsync();
             }
             catch (Exception ex)
@@ -101,9 +120,10 @@ namespace server.Services
                 res.Data = new List<object>();
                 foreach (var school in schools)
                 {
-                    res.Data.Add(new {
-                        school= school,
-                        classes = await _context.dbo_Class.Where(x=>x.SchoolId == school.Id).Select(x=>new {Id = x.Id, Name = x.Name}).ToListAsync()
+                    res.Data.Add(new
+                    {
+                        school = school,
+                        classes = await _context.dbo_Class.Where(x => x.SchoolId == school.Id).Select(x => new { Id = x.Id, Name = x.Name }).ToListAsync()
                     });
                 }
             }

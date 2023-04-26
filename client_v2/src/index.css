@@ -3,11 +3,12 @@
 :root {
   --mainColor: #fbfbff;
   --mainColorDark: #dddde0;
-  --secondaryColor: #3185FC;
+  --secondaryColor: #231123;
+  --secondaryColorAlternate: #3185FC;
   --secondaryColorLight: #72acfd;
   --alternateColor: #031927;
-  --borderColor: #F58F29;
-  --textColor: #ffffff;
+  --borderColor: #A33B20;
+  --textColor: #A52422;
   --hoverTextColor: #9191E9;
   --btnHoverColor: #293241;
   --defaultFont: font-family: 'Montserrat', sans-serif;
@@ -19,8 +20,8 @@
   --secondaryColor: #3d5a80;
   --secondaryColorLight: #667485;
   --alternateColor: #ffffff;
-  --borderColor: #500404;
-  --textColor: #f8f8f8;
+  --borderColor: #ED9B40;
+  --textColor: #130303;
   --hoverTextColor: #e2f1fa;
   --btnHoverColor: #fbfbff;
   --defaultFont: font-family: 'Montserrat', sans-serif;

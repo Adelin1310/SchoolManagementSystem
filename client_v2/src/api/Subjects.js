@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { json } from 'react-router-dom';
 const controller = 'http://localhost:7055/api/Subject/';
 
 
@@ -8,8 +9,11 @@ export const getAllSubjects = async ()=>{
         let response = await axios.get(controller+'GetAllSubjects');
         return response;
     }catch(err){
-        console.error(err)
-        return undefined
+        throw json(
+            {
+                status:parseInt(err.response.status)
+            }
+        )
     }
 }
 

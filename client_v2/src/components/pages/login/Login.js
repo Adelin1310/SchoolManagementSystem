@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './login.css'
-import { login } from '../../../api/Auth';
+import { login, validateToken } from '../../../api/Auth';
 import { useStateContext } from '../../../contexts/UserContext';
 
 const Login = () => {
@@ -10,7 +10,22 @@ const Login = () => {
         password: '',
     })
     const [errors, setErrors] = useState('')
+    useEffect(() => {
+        const checkTokenValidity = async () => {
+            try {
+                const res = await validateToken();
 
+                if (!res.success) {
+                    setCurrentUser(null);
+                } else {
+                    setCurrentUser(res.data);
+                }
+            } catch (error) {
+                console.err(error);
+            }
+        };
+        checkTokenValidity();
+    }, [])
     const handleChange = (name, value) => {
         setFormData({
             ...formData,
@@ -23,6 +38,19 @@ const Login = () => {
         const res = await login(formData)
         if (!res.success) {
             setErrors(res.message)
+        }
+        else {
+            try {
+                const res = await validateToken();
+
+                if (!res.success) {
+                    setCurrentUser(null);
+                } else {
+                    setCurrentUser(res.data);
+                }
+            } catch (error) {
+                console.err(error);
+            }
         }
     }
 

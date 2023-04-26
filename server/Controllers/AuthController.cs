@@ -66,5 +66,12 @@ namespace server.Controllers
             }
             return StatusCode(res.StatusCode, res);
         }
+        [HttpGet("getStudentProfile")]
+        public async Task<ActionResult<SR<Dtos.Profile.GetStudentProfileDto>>> GetStudentProfile()
+        {
+            var sessionID = Request.Cookies["SessionID"];
+            var res = await _service.GetStudentProfile(sessionID);
+            return StatusCode(res.StatusCode, res);
+        }
     }
 }

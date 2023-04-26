@@ -1,27 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import { getAllSchools } from '../api/Schools'
 import Actions from '../components/actions/Actions'
 import Table from '../components/table/Table'
 import { schoolColumns } from '../data/TableColumns'
+import { useLoaderData } from 'react-router-dom'
 
 const Schools = () => {
-  const [schools, setSchools] = useState(undefined)
+  const schools = useLoaderData();
 
-  useEffect(() => {
-    async function f() {
-      let response = await getAllSchools()
-      setSchools(response.data.data)
-    }
-    f()
-  }, [])
   return (
     <div>
-      <Actions />
       {schools !== undefined ?
-        <Table
-          data={schools}
-          columns={schoolColumns}
-        /> : null}
+        <React.Fragment>
+          <Actions />
+          <Table
+            data={schools}
+            columns={schoolColumns}
+          />
+        </React.Fragment>
+        : null}
     </div>
   )
 }

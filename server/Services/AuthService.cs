@@ -15,6 +15,10 @@ namespace server.Services
         private readonly IMapper _mapper;
         private readonly IConfiguration _configuration;
 
+        private readonly List<KeyValuePair<string, Type>> _roles = new List<KeyValuePair<string, Type>>{
+            new KeyValuePair<string, Type>("Student", Type.GetType("GetStudentProfileDto"))
+        };
+
         public AuthService(SMGMSYSContext context, ITokenGenerator generator, IMapper mapper, IConfiguration configuration)
         {
             _context = context;
@@ -202,7 +206,8 @@ namespace server.Services
                 SecurityToken validatedToken;
                 var principal = tokenHandler.ValidateToken(token, validationParameters, out validatedToken);
 
-                if(DateTime.UtcNow > validatedToken.ValidTo){
+                if (DateTime.UtcNow > validatedToken.ValidTo)
+                {
                     _context.dbo_Session.Remove(session);
                     await _context.SaveChangesAsync();
 
@@ -234,6 +239,92 @@ namespace server.Services
                 res.Success = false;
             }
             return res;
+        }
+
+        public async Task<string> GetRole(string sessionId)
+        {
+            if (sessionId == null) return string.Empty;
+            var session = await _context.dbo_Session.Include(s => s.User).ThenInclude(u => u.Role).FirstOrDefaultAsync(s => s.Id == sessionId);
+            if (session == null) return string.Empty;
+            return session.User.Role.Name;
+        }
+        public async Task<Models.dbo_User> GetUser(string sessionId)
+        {
+            if (sessionId == null) return null;
+            var session = await _context.dbo_Session.Include(s => s.User).ThenInclude(u => u.Role).FirstOrDefaultAsync(s => s.Id == sessionId);
+            if (session == null) return null;
+            return session.User;
+        }
+        public async Task<SR<Dtos.Profile.GetStudentProfileDto>> GetStudentProfile(string sessionId)
+        {
+            var res = new SR<Dtos.Profile.GetStudentProfileDto>();
+            if (sessionId == null)
+            {
+                res.Success = false;
+                res.StatusCode = StatusCodes.Status401Unauthorized;
+                res.Message = "Session Expired!";
+                return res;
+            }
+            var session = await _context.dbo_Session.Include(s => s.User).ThenInclude(u => u.Role).FirstOrDefaultAsync(s => s.Id == sessionId);
+            if (session == null)
+            {
+                res.Success = false;
+                res.StatusCode = StatusCodes.Status401Unauthorized;
+                res.Message = "Session Expired!";
+                return res;
+            }
+            try
+            {
+                var student = await _context.dbo_Student
+                    .Include(s => s.Class)
+                    .Include(s => s.School)
+                    .FirstOrDefaultAsync(s => s.UserId == session.UserId);
+                res.Data = new Dtos.Profile.GetStudentProfileDto();
+                if (student is not null)
+                {
+                    var grades = await _context.dbo_Grade
+                        .Include(g => g.Subject)
+                        .Where(g => g.StudentId == session.UserId)
+                        .OrderByDescending(g => g.Date)
+                        .Select(g => _mapper.Map<Dtos.Grade.GetGradeDto>(g))
+                        .Take(10)
+                        .ToListAsync();
+                    var absences = await _context.dbo_Absence
+                        .Include(a => a.Subject)
+                        .Where(a => a.StudentId == session.UserId)
+                        .Select(a => _mapper.Map<Dtos.Absence.GetAbsenceDto>(a))
+                        .ToListAsync();
+                    res.Data.Absences = absences;
+                    res.Data.LatestGrades = grades;
+                    res.Data.Address = student.Address;
+                    res.Data.Class = student.Class.Name;
+                    res.Data.School = student.School.Name;
+                    res.Data.FullName = $"{student.FirstName} {student.LastName}";
+                    res.Data.FirstName = student.FirstName;
+                    res.Data.LastName = student.LastName;
+                    res.Data.Email = session.User.Email;
+                    res.Message = "Profile found successfully!";
+                    res.Success = true;
+                    res.StatusCode = StatusCodes.Status200OK;
+                }
+                else
+                {
+                    res.Success = false;
+                    res.StatusCode = StatusCodes.Status404NotFound;
+                    res.Message = "Student not found!";
+                }
+            }
+            catch (Exception ex)
+            {
+                res.Message = ex.Message;
+                res.StatusCode = StatusCodes.Status500InternalServerError;
+                res.Success = false;
+            }
+            return res;
+        }
+        private async Task GetType(string type)
+        {
+
         }
         private async Task<bool> userExists(string username) => _context.dbo_User.Where(u => u.Username.ToLower() == username.ToLower()).Count() != 0;
 

@@ -1,6 +1,6 @@
 import './App.css'
-import Wrapper from "./components/wrapper";
 import { StateContextProvider } from "./contexts/UserContext";
+import Wrapper from './components/wrapper';
 
 function App() {
   return (
