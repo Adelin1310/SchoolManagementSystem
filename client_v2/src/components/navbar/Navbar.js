@@ -23,6 +23,45 @@ const Navbar = ({ sideMenuState, changeTheme }) => {
     setToggleState(!toggleState)
     changeTheme();
   }
+  const menuItems = () => {
+    const role = currentUser?.role;
+    if (role === "Admin")
+      return (
+        <React.Fragment>
+          <li><Link className={active === 'schools' ? 'active' : null} to={`schools`} onClick={() => { setActive('schools') }}><SchoolIcon className='icon' />SCHOOLS</Link> </li>
+          <li><Link className={active === 'teachers' ? 'active' : null} to={`teachers`} onClick={() => { setActive('teachers') }}><LocalLibraryIcon className='icon' />TEACHERS</Link></li>
+          <li><Link className={active === 'classes' ? 'active' : null} to={`classes`} onClick={() => { setActive('classes') }}><ClassIcon className='icon' />CLASSES</Link></li>
+          <li><Link className={active === 'students' ? 'active' : null} to={`students`} onClick={() => { setActive('students') }}><FaceIcon className='icon' />STUDENTS</Link></li>
+          <li><Link className={active === 'subjects' ? 'active' : null} to={`subjects`} onClick={() => { setActive('subjects') }}><LibraryBooksIcon className='icon' />SUBJECTS</Link></li>
+        </React.Fragment>
+      )
+    if (role === "Student")
+      return (
+        <React.Fragment>
+          <li><Link className={active === 'teachers' ? 'active' : null} to={`teachers`} onClick={() => { setActive('teachers') }}><LocalLibraryIcon className='icon' />MY TEACHERS</Link></li>
+          <li><Link className={active === 'classes' ? 'active' : null} to={`classes`} onClick={() => { setActive('classes') }}><ClassIcon className='icon' />MY CLASS</Link></li>
+          <li><Link className={active === 'subjects' ? 'active' : null} to={`subjects`} onClick={() => { setActive('subjects') }}><LibraryBooksIcon className='icon' />MY SUBJECTS</Link></li>
+        </React.Fragment>
+      )
+    if (role === "Teacher")
+      return (
+        <React.Fragment>
+          <li><Link className={active === 'classes' ? 'active' : null} to={`classes`} onClick={() => { setActive('classes') }}><ClassIcon className='icon' />MY CLASSES</Link></li>
+          <li><Link className={active === 'students' ? 'active' : null} to={`students`} onClick={() => { setActive('students') }}><FaceIcon className='icon' />MY STUDENTS</Link></li>
+          <li><Link className={active === 'subjects' ? 'active' : null} to={`subjects`} onClick={() => { setActive('subjects') }}><LibraryBooksIcon className='icon' />MY SUBJECTS</Link></li>
+        </React.Fragment>
+      )
+    if (role === "Director")
+      return (
+        <React.Fragment>
+          <li><Link className={active === 'schools' ? 'active' : null} to={`schools`} onClick={() => { setActive('schools') }}><SchoolIcon className='icon' />SCHOOL</Link> </li>
+          <li><Link className={active === 'teachers' ? 'active' : null} to={`teachers`} onClick={() => { setActive('teachers') }}><LocalLibraryIcon className='icon' />TEACHERS</Link></li>
+          <li><Link className={active === 'classes' ? 'active' : null} to={`classes`} onClick={() => { setActive('classes') }}><ClassIcon className='icon' />CLASSES</Link></li>
+          <li><Link className={active === 'students' ? 'active' : null} to={`students`} onClick={() => { setActive('students') }}><FaceIcon className='icon' />STUDENTS</Link></li>
+          <li><Link className={active === 'subjects' ? 'active' : null} to={`subjects`} onClick={() => { setActive('subjects') }}><LibraryBooksIcon className='icon' />SUBJECTS</Link></li>
+        </React.Fragment>
+      )
+  }
   const logoutUser = () => {
     try {
       const _ = async () => {
@@ -44,14 +83,7 @@ const Navbar = ({ sideMenuState, changeTheme }) => {
       <Link to={'profile'} onClick={() => { setActive(undefined) }} className='logo'>LOGO</Link>
       <ul className='navmenu'>
         {
-          currentUser?.role !== "Student" ? (
-            <React.Fragment>
-              <li><Link className={active === 'schools' ? 'active' : null} to={`schools`} onClick={() => { setActive('schools') }}><SchoolIcon className='icon' />SCHOOLS</Link> </li>
-              <li><Link className={active === 'classes' ? 'active' : null} to={`classes`} onClick={() => { setActive('classes') }}><ClassIcon className='icon' />CLASSES</Link></li>
-              <li><Link className={active === 'students' ? 'active' : null} to={`students`} onClick={() => { setActive('students') }}><FaceIcon className='icon' />STUDENTS</Link></li>
-              <li><Link className={active === 'teachers' ? 'active' : null} to={`teachers`} onClick={() => { setActive('teachers') }}><LocalLibraryIcon className='icon' />TEACHERS</Link></li>
-            </React.Fragment>
-          ) : null
+          menuItems()
         }
         <li><Link className={active === 'subjects' ? 'active' : null} to={`subjects`} onClick={() => { setActive('subjects') }}><LibraryBooksIcon className='icon' />SUBJECTS</Link></li>
         <li><div onClick={() => logoutUser()}><LogoutIcon className='icon' />LOG OUT</div></li>

@@ -33,7 +33,7 @@ const Wrapper = () => {
     };
     checkTokenValidity();
     setIsSessionValid(currentUser !== null);
-  }, 10000);
+  }, 600000);
 
   return (
     <div className="App" data-theme={theme}>

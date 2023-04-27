@@ -1,3 +1,4 @@
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Security.Claims;
 using server.Services.Interfaces;
@@ -54,7 +55,7 @@ namespace server.Services
                 {
                     Password = passwordHash,
                     Username = newUser.Username,
-
+                    Email = newUser.Email,
                     // TODO: Implement invitation-type registration 
                     // For now, every new user will be registered as a Student
                     RoleId = 1,
@@ -302,6 +303,83 @@ namespace server.Services
                     res.Data.FullName = $"{student.FirstName} {student.LastName}";
                     res.Data.FirstName = student.FirstName;
                     res.Data.LastName = student.LastName;
+                    res.Data.Email = session.User.Email;
+                    res.Message = "Profile found successfully!";
+                    res.Success = true;
+                    res.StatusCode = StatusCodes.Status200OK;
+                }
+                else
+                {
+                    res.Success = false;
+                    res.StatusCode = StatusCodes.Status404NotFound;
+                    res.Message = "Student not found!";
+                }
+            }
+            catch (Exception ex)
+            {
+                res.Message = ex.Message;
+                res.StatusCode = StatusCodes.Status500InternalServerError;
+                res.Success = false;
+            }
+            return res;
+        }
+        public async Task<SR<Dtos.Profile.GetTeacherProfileDto>> GetTeacherProfile(string sessionId)
+        {
+            var res = new SR<Dtos.Profile.GetTeacherProfileDto>();
+            if (sessionId == null)
+            {
+                res.Success = false;
+                res.StatusCode = StatusCodes.Status401Unauthorized;
+                res.Message = "Session Expired!";
+                return res;
+            }
+            var session = await _context.dbo_Session.Include(s => s.User).ThenInclude(u => u.Role).FirstOrDefaultAsync(s => s.Id == sessionId);
+            if (session == null)
+            {
+                res.Success = false;
+                res.StatusCode = StatusCodes.Status401Unauthorized;
+                res.Message = "Session Expired!";
+                return res;
+            }
+            try
+            {
+                var teacher = await _context.dbo_Teacher
+                    .FirstOrDefaultAsync(s => s.UserId == session.UserId);
+                res.Data = new Dtos.Profile.GetTeacherProfileDto();
+                if (teacher is not null)
+                {
+
+                    var schools = await _context.dbo_SchoolTeacher
+                        .Include(st => st.School)
+                        .Where(st => st.TeacherId == teacher.Id)
+                        .ToListAsync();
+                    var classes = await _context.dbo_ClassSubject
+                        .Include(cs => cs.Class)
+                        .Where(cs => cs.TeacherId == teacher.Id)
+                        .ToListAsync();
+                    classes = classes.Where(cs => schools.Any(sc => sc.SchoolId == cs.Class.SchoolId)).ToList();
+                    res.Data.SchoolsTaught = new List<Dtos.School.GetSchoolWClassesDto>();
+                    foreach (var sc in schools)
+                    {
+                        res.Data.SchoolsTaught.Add(new Dtos.School.GetSchoolWClassesDto
+                        {
+                            Name = sc.School.Name,
+                            Classes = classes
+                                .OrderBy(cls => cls.Class.Name)
+                                .Select(cls => cls.Class.Name)
+                                .Distinct()
+                                .ToList()
+                        });
+                    }
+                    res.Data.Subjects = await _context.dbo_TeacherSubject
+                        .Include(ts => ts.Subject)
+                        .Where(ts => ts.TeacherId == teacher.Id)
+                        .Select(ts => ts.Subject.Name)
+                        .ToListAsync();
+                    res.Data.Address = teacher.Address;
+                    res.Data.FullName = $"{teacher.FirstName} {teacher.LastName}";
+                    res.Data.FirstName = teacher.FirstName;
+                    res.Data.LastName = teacher.LastName;
                     res.Data.Email = session.User.Email;
                     res.Message = "Profile found successfully!";
                     res.Success = true;

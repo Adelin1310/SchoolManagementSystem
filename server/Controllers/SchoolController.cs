@@ -37,8 +37,8 @@ namespace server.Controllers
             switch (role)
             {
                 case "Student":
-                    return StatusCode(401);
                 case "Teacher":
+                    return StatusCode(401);
                 case "Director":
                     res = await _service.GetAllSchoolsByTeacherId(user.Id);
                     return StatusCode(res.StatusCode, res);

@@ -12,6 +12,8 @@ namespace server.Services.Interfaces
         Task<SR<GetStudentDto>> GetStudentById(int studentId);
         Task<SR<List<GetStudentDto>>> GetAllStudentsByClassId(int classId);
         Task<SR<List<GetStudentDto>>> GetAllStudentsBySchoolId(int schoolId);
+        Task<SR<List<AddStudentDto>>> GenerateRandomStudents();
+        Task<SR<List<GetStudentDto>>> AddStudents(List<AddStudentDto> newStudents);
         Task<SR<GetStudentDto>> AddStudent(AddStudentDto newStudent);
         Task<SR<GetStudentDto>> UpdateStudentById(int studentId, UpdateStudentDto updatedStudent);
         Task<SR<object>> DeleteStudentById(int studentId);

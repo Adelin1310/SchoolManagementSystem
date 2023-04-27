@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useStateContext } from "../../contexts/UserContext";
 import { getProfile } from "../../api/Auth";
-import "./studentprofile.css";
+import "./profile.css";
 
 const StudentProfile = () => {
   const [currentUser, setCurrentUser] = useState(null);

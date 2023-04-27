@@ -14,5 +14,6 @@ namespace server.Services.Interfaces
         Task<string> GetRole(string sessionId);
         Task<Models.dbo_User> GetUser(string sessionId);
         Task<SR<Dtos.Profile.GetStudentProfileDto>> GetStudentProfile(string sessionId);
+        Task<SR<Dtos.Profile.GetTeacherProfileDto>> GetTeacherProfile(string sessionId);
     }
 }

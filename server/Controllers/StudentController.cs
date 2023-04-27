@@ -13,11 +13,11 @@ namespace server.Controllers
     public class StudentController : ControllerBase
     {
         private readonly IStudentService _service;
-
-        public StudentController(IStudentService service)
+        private readonly IAuthService _auth;
+        public StudentController(IStudentService service, IAuthService auth)
         {
             _service = service;
-
+            _auth = auth;
         }
         [HttpGet("GetAllStudents")]
         public async Task<ActionResult<SR<List<GetStudentDto>>>> GetAllStudents()
@@ -46,6 +46,27 @@ namespace server.Controllers
             var res = await _service.GetStudentById(studentId);
             return ErrorHandler.ResponseCodeHandler(res.StatusCode, res);
 
+        }
+        [HttpPost("AddRandomStudents")]
+        public async Task<ActionResult<SR<List<GetStudentDto>>>> AddRandomStudents()
+        {
+            var rndStudents = await _service.GenerateRandomStudents();
+            var idx = 0;
+            if (rndStudents.Success)
+            {
+                foreach (var std in rndStudents.Data)
+                {
+                    await _auth.Register(new Dtos.User.UserRegisterDto
+                    {
+                        Email = $"{std.FirstName}{std.LastName}@gmail.com",
+                        Password = $"TestUser!{idx}",
+                        Username = $"TestUser{idx}"
+                    });
+                }
+                var res = await _service.AddStudents(rndStudents.Data);
+                return StatusCode(res.StatusCode, res);
+            }
+            return StatusCode(rndStudents.StatusCode, rndStudents);
         }
         [HttpPost("AddStudent")]
         public async Task<ActionResult<SR<GetStudentDto>>> AddStudent(AddStudentDto newStudent)

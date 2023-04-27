@@ -73,5 +73,12 @@ namespace server.Controllers
             var res = await _service.GetStudentProfile(sessionID);
             return StatusCode(res.StatusCode, res);
         }
+        [HttpGet("getTeacherProfile")]
+        public async Task<ActionResult<SR<Dtos.Profile.GetTeacherProfileDto>>> GetTeacherProfile()
+        {
+            var sessionID = Request.Cookies["SessionID"];
+            var res = await _service.GetTeacherProfile(sessionID);
+            return StatusCode(res.StatusCode, res);
+        }
     }
 }

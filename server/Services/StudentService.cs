@@ -13,14 +13,81 @@ namespace server.Services
     public class StudentService : IStudentService
     {
         private readonly SMGMSYSContext _context;
+        private readonly IAuthService _service;
         private readonly IMapper _mapper;
 
-        public StudentService(SMGMSYSContext context, IMapper mapper)
+        public StudentService(SMGMSYSContext context, IMapper mapper, IAuthService service)
         {
             _context = context;
             _mapper = mapper;
+            _service = service;
+        }
+        private static int GetRandomNumberInRange(int min, int max)
+        {
+            Random random = new Random();
+            return random.Next(min, max + 1);
+        }
+        public async Task<SR<List<AddStudentDto>>> GenerateRandomStudents()
+        {
+            var res = new SR<List<AddStudentDto>>();
+            try
+            {
+                string[] firstNames = { "John", "Jane", "Michael", "Emma", "David", "Sophia" };
+                string[] lastNames = { "Doe", "Smith", "Johnson", "Brown", "Lee", "Taylor" };
+
+                // Generate an array of 10 random user objects
+                List<AddStudentDto> randomStudents = new List<AddStudentDto>();
+                Random random = new Random();
+                for (int i = 0; i < 30; i++)
+                {
+                    AddStudentDto student = new AddStudentDto
+                    {
+                        FirstName = firstNames[random.Next(firstNames.Length)],
+                        LastName = lastNames[random.Next(lastNames.Length)],
+                        Address = "1234 Example St, City, State, ZIP",
+                        ClassId = GetRandomNumberInRange(8, 27),
+                        SchoolId = 4,
+                        Photo = "https://example.com/profile-photo.jpg",
+                        UserId = _context.dbo_User.OrderBy(u => u.Id).Last().Id + 1
+                    };
+                    randomStudents.Add(student);
+
+                }
+                res.Data = randomStudents;
+                res.Message = "Students generated successfully!";
+                res.Success = true;
+                res.StatusCode = StatusCodes.Status200OK;
+            }
+            catch (System.Exception ex)
+            {
+                res.Message = ex.Message;
+                res.StatusCode = StatusCodes.Status500InternalServerError;
+                res.Success = false;
+            }
+            return res;
         }
 
+        public async Task<SR<List<GetStudentDto>>> AddStudents(List<AddStudentDto> newStudents)
+        {
+            var res = new SR<List<GetStudentDto>>();
+            try
+            {
+                var mappedStudents = newStudents.Select(s => _mapper.Map<dbo_Student>(s)).ToList();
+                await _context.dbo_Student.AddRangeAsync(mappedStudents);
+                await _context.SaveChangesAsync();
+                res.Data = mappedStudents.Select(s => _mapper.Map<GetStudentDto>(s)).ToList();
+                res.Message = "Students added successfully!";
+                res.StatusCode = StatusCodes.Status200OK;
+                res.Success = true;
+            }
+            catch (Exception ex)
+            {
+                res.Message = ex.Message;
+                res.StatusCode = StatusCodes.Status500InternalServerError;
+                res.Success = false;
+            }
+            return res;
+        }
         public async Task<SR<GetStudentDto>> AddStudent(AddStudentDto newStudent)
         {
             var res = new SR<GetStudentDto>();

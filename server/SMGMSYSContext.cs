@@ -12,6 +12,7 @@ namespace server
         public DbSet<dbo_Absence> dbo_Absence { get; set; }
         public DbSet<dbo_Class> dbo_Class { get; set; }
         public DbSet<dbo_Classbook> dbo_Classbook { get; set; }
+        public DbSet<dbo_ClassSubject> dbo_ClassSubject { get; set; }
         public DbSet<dbo_Grade> dbo_Grade { get; set; }
         public DbSet<dbo_Role> dbo_Role { get; set; }
         public DbSet<dbo_School> dbo_School { get; set; }
