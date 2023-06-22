@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Security.Claims;
@@ -88,7 +89,7 @@ namespace server.Services
                 {
                     res.Message = "Username incorrect!";
                     res.Success = false;
-                    res.StatusCode = StatusCodes.Status400BadRequest;
+                    res.StatusCode = StatusCodes.Status200OK;
                     return res;
                 }
                 var user = await _context.dbo_User.Include(u => u.Role).FirstOrDefaultAsync(u => u.Username == credentials.Username);
@@ -96,7 +97,6 @@ namespace server.Services
                 {
                     res.Message = "Password incorrect!";
                     res.Success = false;
-                    res.StatusCode = StatusCodes.Status400BadRequest;
                     return res;
                 }
                 var claims = new List<Claim>{
@@ -177,7 +177,7 @@ namespace server.Services
                 var session = await _context.dbo_Session.FirstOrDefaultAsync(s => s.Id == sessionId);
                 if (session == null)
                 {
-                    res.Message = "Invalid attempt";
+                    res.Message = "Invalid attempt - session not found!";
                     res.StatusCode = StatusCodes.Status400BadRequest;
                     res.Success = false;
                     return res;
@@ -229,13 +229,14 @@ namespace server.Services
                     return res;
                 }
                 res.Data = _mapper.Map<Dtos.User.GetUserDto>(user);
+                res.Data.ProfileImg = await _context.dbo_ProfilePhotos.Where(pp => pp.UserId == user.Id).Select(pp => pp.Photo).FirstOrDefaultAsync();
                 res.Message = "Validation successful!";
                 res.Success = true;
                 res.StatusCode = StatusCodes.Status200OK;
             }
             catch (Exception ex)
             {
-                res.Message = ex.Message;
+                res.Message = ex.StackTrace;
                 res.StatusCode = StatusCodes.Status500InternalServerError;
                 res.Success = false;
             }
@@ -274,15 +275,28 @@ namespace server.Services
                 res.Message = "Session Expired!";
                 return res;
             }
+            if (session.User.Role.Name != "Student")
+            {
+                res.Success = false;
+                res.StatusCode = StatusCodes.Status401Unauthorized;
+                res.Message = "Only students can access this endpoint!";
+                return res;
+            }
             try
             {
                 var student = await _context.dbo_Student
                     .Include(s => s.Class)
                     .Include(s => s.School)
                     .FirstOrDefaultAsync(s => s.UserId == session.UserId);
-                res.Data = new Dtos.Profile.GetStudentProfileDto();
-                if (student is not null)
+
+                if (student != null)
                 {
+                    var parentsInfo = await _context.dbo_ParentsInfo
+                        .Include(pi => pi.Student)
+                        .Where(pi => pi.StudentId == student.Id)
+                        .Select(pi => _mapper.Map<Dtos.ParentsInfo.GetParentsInfoDto>(pi))
+                        .FirstAsync();
+                    var studentsCount = await _context.dbo_Student.Where(st => st.ClassId == student.ClassId).CountAsync();
                     var grades = await _context.dbo_Grade
                         .Include(g => g.Subject)
                         .Where(g => g.StudentId == session.UserId)
@@ -292,18 +306,34 @@ namespace server.Services
                         .ToListAsync();
                     var absences = await _context.dbo_Absence
                         .Include(a => a.Subject)
-                        .Where(a => a.StudentId == session.UserId)
+                        .Where(a => a.StudentId == student.Id)
                         .Select(a => _mapper.Map<Dtos.Absence.GetAbsenceDto>(a))
                         .ToListAsync();
-                    res.Data.Absences = absences;
-                    res.Data.LatestGrades = grades;
-                    res.Data.Address = student.Address;
-                    res.Data.Class = student.Class.Name;
-                    res.Data.School = student.School.Name;
-                    res.Data.FullName = $"{student.FirstName} {student.LastName}";
-                    res.Data.FirstName = student.FirstName;
-                    res.Data.LastName = student.LastName;
-                    res.Data.Email = session.User.Email;
+                    var cls = await _context.dbo_Class
+                        .Where(c => c.Id == student.ClassId)
+                        .Include(c => c.ClassSpecialization)
+                        .Include(c => c.HomeroomTeacher)
+                        .Include(c => c.School)
+                        .Select(c => _mapper.Map<Dtos.Class.GetClassDto>(c)).FirstAsync();
+                    var classLeader = await _context.dbo_ClassLeader.Where(cl => cl.ClassId == student.ClassId).Select(cl => $"{cl.ClassLeader.FirstName} {cl.ClassLeader.LastName}").FirstAsync();
+
+                    res.Data = new Dtos.Profile.GetStudentProfileDto
+                    {
+                        Id = student.Id,
+                        Absences = absences,
+                        LatestGrades = grades,
+                        Address = student.Address,
+                        Class = cls,
+                        FullName = $"{student.FirstName} {student.LastName}",
+                        FirstName = student.FirstName,
+                        LastName = student.LastName,
+                        Email = session.User.Email,
+                        ParentsInfo = parentsInfo,
+                        DateOfBirth = DateOnly.FromDateTime(student.DateOfBirth).ToString("dd MMMM yyyy", CultureInfo.GetCultureInfo("en-US")),
+                    };
+                    res.Data.Class.ClassLeader = classLeader;
+                    res.Data.Class.StudentsCount = studentsCount;
+
                     res.Message = "Profile found successfully!";
                     res.Success = true;
                     res.StatusCode = StatusCodes.Status200OK;
@@ -341,6 +371,13 @@ namespace server.Services
                 res.Message = "Session Expired!";
                 return res;
             }
+            if (session.User.Role.Name != "Teacher")
+            {
+                res.Success = false;
+                res.StatusCode = StatusCodes.Status401Unauthorized;
+                res.Message = "Only teachers can access this endpoint!";
+                return res;
+            }
             try
             {
                 var teacher = await _context.dbo_Teacher
@@ -376,6 +413,7 @@ namespace server.Services
                         .Where(ts => ts.TeacherId == teacher.Id)
                         .Select(ts => ts.Subject.Name)
                         .ToListAsync();
+                    res.Data.Id = teacher.Id;
                     res.Data.Address = teacher.Address;
                     res.Data.FullName = $"{teacher.FirstName} {teacher.LastName}";
                     res.Data.FirstName = teacher.FirstName;
@@ -400,11 +438,7 @@ namespace server.Services
             }
             return res;
         }
-        private async Task GetType(string type)
-        {
-
-        }
-        private async Task<bool> userExists(string username) => _context.dbo_User.Where(u => u.Username.ToLower() == username.ToLower()).Count() != 0;
+        private async Task<bool> userExists(string username) => await _context.dbo_User.Where(u => u.Username.ToLower() == username.ToLower()).CountAsync() != 0;
 
     }
 }

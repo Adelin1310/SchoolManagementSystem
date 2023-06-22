@@ -11,7 +11,7 @@ namespace server.Models
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
-        public int Age { get; set; }
+        public string Photo { get; set; } = string.Empty;
         public int UserId { get; set; }
         public dbo_User User { get; set; }
     }

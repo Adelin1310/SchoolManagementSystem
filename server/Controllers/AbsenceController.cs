@@ -13,13 +13,20 @@ namespace server.Controllers
     public class AbsenceController : ControllerBase
     {
         private readonly IAbsenceService _service;
-        public AbsenceController(IAbsenceService service)
+        private readonly IAuthService _auth;
+        public AbsenceController(IAbsenceService service, IAuthService auth)
         {
+            _auth = auth;
             _service = service;
         }
         [HttpPost("AddAbsence")]
         public async Task<ActionResult<SR<GetAbsenceDto>>> AddAbsence(AddAbsenceDto newAbsence)
         {
+            var sessionID = Request.Cookies["sessionID"];
+            var user = await _auth.ValidateToken(sessionID);
+            if (user.StatusCode != StatusCodes.Status200OK) return StatusCode(401, user);
+            var teacher = await _auth.GetTeacherProfile(sessionID);
+            if (teacher.StatusCode != StatusCodes.Status200OK) return StatusCode(401, teacher);
             var res = await _service.AddAbsence(newAbsence);
             return res;
         }
@@ -54,9 +61,14 @@ namespace server.Controllers
             var res = await _service.GetAbsenceById(absenceId);
             return res;
         }
-        [HttpPut("UpdateAbsenceById")]
-        public async Task<ActionResult<SR<GetAbsenceDto>>> UpdateAbsenceById(int absenceId, UpdateAbsenceDto updatedAbsence){
-            var res = await _service.UpdateAbsenceById(absenceId, updatedAbsence);
+        [HttpPost("MotivateAbsence")]
+        public async Task<ActionResult<SR<GetAbsenceDto>>> MotivateAbsence(UpdateAbsenceDto updatedAbsence){
+            var sessionID = Request.Cookies["sessionID"];
+            var user = await _auth.ValidateToken(sessionID);
+            if (user.StatusCode != StatusCodes.Status200OK) return StatusCode(401, user);
+            var teacher = await _auth.GetTeacherProfile(sessionID);
+            if (teacher.StatusCode != StatusCodes.Status200OK) return StatusCode(401, teacher);
+            var res = await _service.UpdateAbsenceById(updatedAbsence, teacher.Data.Id);
             return res;
         }
         [HttpDelete("DeleteAbsenceById")]

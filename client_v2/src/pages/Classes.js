@@ -2,38 +2,23 @@ import React, { useEffect, useState } from 'react'
 import { deleteClassById, getAllClasses } from '../api/Class'
 import Actions from '../components/actions/Actions'
 import Table from '../components/table/Table'
-import { classColumns } from '../data/TableColumns'
+import { StudentViewClassColumns, classColumns, studentColumns } from '../data/TableColumns'
+import { useLoaderData } from 'react-router-dom'
+import { useStateContext } from '../contexts/UserContext'
+import LoadingSpinner from '../components/loading/LoadingSpinner'
+import { deleteStudentById } from '../api/Students'
 
 const Classes = () => {
-    const [classes, setClasses] = useState(undefined)
+    const { currentUser } = useStateContext()
+    let data = useLoaderData()
+    const dataColumns = currentUser?.role === "Student" ? StudentViewClassColumns : studentColumns
 
-    useEffect(() => {
-        async function f() {
-            let response = await getAllClasses()
-            setClasses(response.data.data)
-        }
-        f()
-    }, [])
-
-    const onDelete = async (id) => {
-        let res = await deleteClassById(id)
-        if (res.data.success)
-            return res.data.message
-        else
-            console.error(res.data.message)
+    const getReturn = () => {
+        return (<LoadingSpinner />)
     }
 
     return (
-        <div>
-            <Actions/>
-            {
-                classes !== undefined ?
-                    <Table
-                        data={classes}
-                        columns={classColumns}
-                        onDelete={onDelete} /> : null
-            }
-        </div>
+        getReturn()
     )
 }
 

@@ -9,10 +9,12 @@ namespace server.Services.Interfaces
     public interface IClassService
     {
         Task<SR<List<GetClassDto>>> GetAllClasses();
+        Task<SR<List<GetClassSubjectDto>>> GetAllTeacherClasses(int teacherId);
         Task<SR<GetClassDto>> GetClassById(int classId);
         Task<SR<GetClassDto>> UpdateClassById(int classId, UpdateClassDto updatedClass);
         Task<SR<GetClassDto>> AddClass(AddClassDto newClass);
         Task<SR<List<GetClassDto>>> AddSecondaryEducationNoHSClasses(string[] names, int schoolId);
+        Task<SR<GetStudentClassDto>> GetStudentClass(string sessionID);
         Task<object> DeleteClassById(int classId);
     }
 }

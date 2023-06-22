@@ -1,17 +1,55 @@
 import axios from 'axios'
 import { json } from 'react-router-dom';
-const controller = 'http://localhost:7055/api/Subject/';
+import { host } from '.';
+const controller = `${host}Subject/`;
 
 
-
-export const getAllSubjects = async ()=>{
-    try{
-        let response = await axios.get(controller+'GetAllSubjects');
-        return response;
-    }catch(err){
+export const getStudentClassbook = async () => {
+    try {
+        var res = await axios.get(controller + 'GetAllClassSubjects', { withCredentials: true })
+        return res.data.data
+    } catch (err) {
         throw json(
             {
-                status:parseInt(err.response.status)
+                status: parseInt(err.response.status)
+            }
+        )
+    }
+}
+export const getTeacherClassSubjects = async (classId) => {
+    try {
+        var res = await axios.get(controller + `GetTeacherClassSubjects/${classId}`, { withCredentials: true })
+        return res.data.data
+
+    } catch (err) {
+        throw json(
+            {
+                status: parseInt(err.response.status)
+            }
+        )
+    }
+}
+export const getStudentSituation = async () => {
+    try {
+        var res = await axios.get(controller + 'GetStudentSituation', { withCredentials: true })
+        return res.data.data
+    } catch (err) {
+        throw json(
+            {
+                status: parseInt(err.response.status)
+            }
+        )
+    }
+}
+
+export const getAllSubjects = async () => {
+    try {
+        let response = await axios.get(controller + 'GetAllSubjects');
+        return response;
+    } catch (err) {
+        throw json(
+            {
+                status: parseInt(err.response.status)
             }
         )
     }

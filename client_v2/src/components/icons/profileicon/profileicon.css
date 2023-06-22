@@ -4,16 +4,19 @@
     width: 50px;
     cursor: pointer;
     border-radius: 50px;
-    margin-right: 10px;
-}
-
-.profileicon:hover {
+    overflow: hidden;
+  }
+  
+  .profileicon:hover {
     transition-duration: .2s;
     opacity: .5;
-}
-
-.profileicon>img {
+  }
+  
+  .profileicon>img {
     height: 50px;
     border-radius: 50px;
-    border: 3px solid var(--textColor);
-}
+    border: 3px solid transparent;
+    background-clip: padding-box;
+    background-image: linear-gradient(to bottom right, var(--primary-color), var(--secondary-color));
+  }
+  

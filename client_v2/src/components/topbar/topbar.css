@@ -4,7 +4,7 @@
     transition-property: left;
     transition-duration: .5s;
     color: white;
-    background-color: var(--secondaryColor);
+    background-color: var(--dark-color);
     right: 0;
     padding: 0;
 
@@ -21,12 +21,15 @@
     display: flex;
     align-items: center;
     list-style-type: none;
+    width: 25%;
 }
 
 .topbarmenu>li {
     margin: auto;
 }
-
+.module-li{
+    width: 50%;
+}
 .sidemenubtn {
     margin: 0;
     min-height: 60px;
@@ -38,10 +41,22 @@
 
 .sidemenubtn:hover {
     transition-duration: .2s;
-    fill: var(--borderColor);
+    fill: var(--secondary-color);
 }
 
 .fullbar {
     left: 0 !important;
     transition-duration: .5s;
+}
+
+@media screen and (max-width:500px){
+    .topbarmenu{
+        width: 75% !important;
+    }
+    .sidemenubtn{
+        min-height: 15px;
+        min-width: 15px;
+        padding: 0;
+    }
+    
 }

@@ -29,6 +29,7 @@ namespace server.Services
                 var grade = _mapper.Map<dbo_Grade>(newGrade);
                 var student = await _context.dbo_Student.FirstOrDefaultAsync(x => x.Id == newGrade.StudentId);
                 var subject = await _context.dbo_Subject.FirstOrDefaultAsync(x => x.Id == newGrade.SubjectId);
+                var classbook = await _context.dbo_Classbook.FirstOrDefaultAsync(x => x.Id == newGrade.ClassbookId);
                 if (student == null)
                 {
                     res.NotFound("Student");
@@ -37,6 +38,11 @@ namespace server.Services
                 if (subject == null)
                 {
                     res.NotFound("Subject");
+                    return res;
+                }
+                if (classbook == null)
+                {
+                    res.NotFound("Classbook");
                     return res;
                 }
                 await _context.dbo_Grade.AddAsync(grade);
@@ -150,13 +156,15 @@ namespace server.Services
                     .Include(x => x.Student)
                     .Include(x => x.Subject)
                     .FirstOrDefaultAsync(x => x.Id == gradeId);
-                var student = await _context.dbo_Student.FirstOrDefaultAsync(x=>x.Id == updatedGrade.StudentId);
-                var subject = await _context.dbo_Subject.FirstOrDefaultAsync(x=>x.Id == updatedGrade.SubjectId);
-                if(subject == null){
+                var student = await _context.dbo_Student.FirstOrDefaultAsync(x => x.Id == updatedGrade.StudentId);
+                var subject = await _context.dbo_Subject.FirstOrDefaultAsync(x => x.Id == updatedGrade.SubjectId);
+                if (subject == null)
+                {
                     res.NotFound("Subject");
                     return res;
                 }
-                if(student == null){
+                if (student == null)
+                {
                     res.NotFound("Student");
                     return res;
                 }

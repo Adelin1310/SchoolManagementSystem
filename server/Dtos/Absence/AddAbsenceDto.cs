@@ -9,6 +9,7 @@ namespace server.Dtos.Absence
     {
         public int StudentId { get; set; }
         public int SubjectId { get; set; }
+        public int ClassbookId { get; set; }
         public DateTime Date { get; set; }
     }
 }

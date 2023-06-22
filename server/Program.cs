@@ -21,7 +21,11 @@ builder.Services.AddSwaggerGen();
 
 // Database connection using Pomelo's EFCore MySql package
 var connString = builder.Configuration.GetConnectionString("Default");
-builder.Services.AddDbContext<SMGMSYSContext>(options => options.UseMySQL(connString ?? ""));
+builder.Services.AddDbContext<SMGMSYSContext>(options =>
+{
+    options.UseMySQL(connString ?? "");
+    options.EnableSensitiveDataLogging();
+});
 
 // Configure token validation parameters using the JWT settings, including the expiration time
 var tokenValidationParameters = new TokenValidationParameters
@@ -51,6 +55,7 @@ builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<ITeacherService, TeacherService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ISituationsService, SituationsService>();
 builder.Services.AddSingleton<ITokenGenerator, TokenGenerator>();
 builder.Services.AddAutoMapper(typeof(server.AutoMapperProfile).Assembly);
 
@@ -70,12 +75,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+var origins = new string[]{
+    "http://localhost:3000",
+    "http://192.168.1.2:3000"
+};
 
 app.UseCors(builder =>
 {
     builder.AllowAnyHeader();
     builder.AllowAnyMethod();
-    builder.WithOrigins("http://localhost:3000");
+    builder.WithOrigins(origins);
     builder.AllowCredentials();
 });
 

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { json } from 'react-router-dom';
-const controller = 'http://localhost:7055/api/School/';
+import { host } from '.';
+const controller = `${host}School/`;
 
 
 

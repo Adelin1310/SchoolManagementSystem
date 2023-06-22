@@ -1,0 +1,32 @@
+.edit-absence-modal {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.edit-absence-modal h2 {
+    color: var(--text-color);
+    margin-top: 0;
+}
+
+.edit-absence-modal form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin-top: 20px;
+}
+
+.edit-absence-modal button {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.edit-absence-modal button:hover {
+    background-color: var(--secondary-color);
+}

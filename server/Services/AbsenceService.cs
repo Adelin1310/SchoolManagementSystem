@@ -137,18 +137,27 @@ namespace server.Services
             return res;
         }
 
-        public async Task<SR<GetAbsenceDto>> UpdateAbsenceById(int absenceId, UpdateAbsenceDto updatedAbsence)
+        public async Task<SR<GetAbsenceDto>> UpdateAbsenceById(UpdateAbsenceDto updatedAbsence, int teacherId)
         {
             var res = new SR<GetAbsenceDto>();
             try
             {
-                var absence = await _context.dbo_Absence.FirstOrDefaultAsync(x => x.Id == absenceId);
+                var absence = await _context.dbo_Absence
+                    .Include(x => x.Classbook).ThenInclude(x => x.Class)
+                    .FirstOrDefaultAsync(x => x.Id == updatedAbsence.Id);
                 if (absence == null)
                 {
                     res.NotFound("Absence");
                     return res;
                 }
-                absence.WithLeave = updatedAbsence.WithLeave;
+                if (absence.Classbook.Class.HomeroomTeacherId != teacherId)
+                {
+                    res.StatusCode = StatusCodes.Status401Unauthorized;
+                    res.Message = "Teacher is not homeroom teacher!";
+                    res.Success = false;
+                    return res;
+                }
+                absence.WithLeave = true;
                 await _context.SaveChangesAsync();
 
                 res.Data = _mapper.Map<GetAbsenceDto>(absence);

@@ -13,21 +13,49 @@ import Classes from './pages/Classes';
 import AddSchool from './pages/School/AddSchool';
 import AddClass from './pages/Class/AddClass';
 import Students from './pages/Students';
-import Teachers from './pages/Teachers';
 import Subjects from './pages/Subjects';
 import RootBoundary from './components/codes/RootBoundary';
 import { getAllSchools } from './api/Schools';
 import Profile from './pages/Profile';
+import Homepage from './pages/Homepage';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import { getAllClasses, getAllTeacherClasses, getStudentClass } from './api/Class';
+import StudentViewClass from './pages/Class/StudentViewClass';
+import StudentViewTeachers from './pages/Teacher/StudentViewTeachers';
+import DirectorViewTeachers from './pages/Teacher/DirectorViewTeachers';
+import { getTeachersByClassId, getTeacherWClassesAndSubjects } from './api/Teachers';
+import StudentViewTeacher from './pages/Teacher/StudentViewTeacher';
+import StudentViewClassbook from './pages/Classbook/StudentViewClassbook';
+import { getStudentClassbook, getStudentSituation, getSubjectSituation, getTeacherClassSubjects } from './api/Subjects';
+import StudentViewSubject from './pages/Subject/StudentViewSubject';
+import TeacherViewClasses from './pages/Class/TeacherViewClasses';
+import TeacherViewClassbook from './pages/Classbook/TeacherViewClassbook';
+import { getClassbook } from './api/Classbook';
 
 const router = createBrowserRouter([
   {
     path: '/',
+    element: <Homepage />,
+    errorElement: <RootBoundary />,
+  },
+  {
+    path: '/register',
+    element: <Register />
+  },
+  {
+    path: '/app',
     element: <App />,
-    errorElement:<RootBoundary/>,
+    errorElement: <RootBoundary />,
     children: [
       {
-        path:'profile',
-        element:<Profile/>
+        path: 'login',
+        element: <Login />
+      },
+
+      {
+        path: 'profile',
+        element: <Profile />
       },
       {
         loader: getAllSchools,
@@ -35,40 +63,73 @@ const router = createBrowserRouter([
         element: <Schools />,
       },
       {
-        path:'schools/add',
-        element:<AddSchool/>
+        path: 'schools/add',
+        element: <AddSchool />
       },
       {
-        path: 'classes',
-        element: <Classes />,
+        loader: getStudentClass,
+        path: 'myclass',
+        element: <StudentViewClass />
       },
       {
-        path:'classes/add',
-        element:<AddClass/>
+        loader: getStudentSituation,
+        path: 'student/classbook',
+        element: <StudentViewClassbook />,
+
       },
       {
-        path: 'students',
+        loader: getAllTeacherClasses,
+        path: 'teacher/classes',
+        element: <TeacherViewClasses />,
+      },
+      {
+        path: 'teacher/classes/:classId/classbook/:classbookId',
+        loader: async ({ req, params }) => {
+          const data = await getClassbook(params.classbookId)
+          const subjects = await getTeacherClassSubjects(params.classId)
+          return { data, subjects }
+        },
+        element: <TeacherViewClassbook />,
+      },
+      {
+        path: 'classes/add',
+        element: <AddClass />
+      },
+      {
+        path: 'teacher/students',
         element: <Students />,
       },
       {
-        path:'students/add',
-        element:<AddClass/>
+        path: 'students/add',
+        element: <AddClass />
+      },
+      {
+        loader: getTeachersByClassId,
+        path: 'myteachers',
+        element: <StudentViewTeachers />,
+      },
+      {
+        path: 'myteachers/:teacherId',
+        loader: ({ params }) => {
+          return getTeacherWClassesAndSubjects(params.teacherId)
+        },
+        element: <StudentViewTeacher />
       },
       {
         path: 'teachers',
-        element: <Teachers />,
+        element: <DirectorViewTeachers />,
       },
       {
-        path:'teachers/add',
-        element:<AddClass/>
+        path: 'teachers/add',
+        element: <AddClass />
       },
       {
-        path: 'subjects',
+        path: 'teacher/subjects',
         element: <Subjects />,
       },
       {
-        path:'subjects/add',
-        element:<AddClass/>
+        path: 'subjects/add',
+        element: <AddClass />
       },
     ]
   }

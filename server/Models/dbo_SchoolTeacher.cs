@@ -10,8 +10,8 @@ namespace server.Models
     {
         public int Id { get; set; }
         public int SchoolId { get; set; }
-        public dbo_School School { get; set; } = new dbo_School();
+        public dbo_School School { get; set; }
         public int TeacherId { get; set; }
-        public dbo_Teacher Teacher { get; set; } = new dbo_Teacher();
+        public dbo_Teacher Teacher { get; set; }
     }
 }

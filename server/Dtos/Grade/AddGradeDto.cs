@@ -7,6 +7,7 @@ namespace server.Dtos.Grade
 {
     public class AddGradeDto
     {
+        public int ClassbookId { get; set; }
         public int StudentId { get; set; }
         public int SubjectId { get; set; }
         public int Value { get; set; }

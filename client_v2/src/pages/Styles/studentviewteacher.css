@@ -1,0 +1,62 @@
+/* student-view-teacher-profile.css */
+
+.student-view-teacher-profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow-y: scroll;
+  }
+  
+  
+  .teacher-profile-header-text {
+    font-size: 2rem;
+    color: var(--primary-color);
+  }
+  
+  .teacher-profile-details {
+    text-align: center;
+  }
+  
+  .teacher-profile-details-header {
+    font-size: 2rem;
+  }
+  
+  .teacher-profile-details-text {
+    margin-top: 0.5rem;
+  }
+  
+  .teacher-profile-classes {
+    width: 100%;
+  }
+  
+  .teacher-profile-classes-header {
+    font-size: 2rem;
+  }
+  
+  .teacher-profile-subjects {
+    text-align: center;
+  }
+  
+  .teacher-profile-subjects-header {
+    font-size: 2rem;
+  }
+  
+  .teacher-profile-subjects-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .teacher-profile-subjects-item {
+    margin: 0.5rem;
+    padding: 0.5rem;
+    border: 1px solid var(--accent-color);
+    border-radius: 0.25rem;
+  }
+  

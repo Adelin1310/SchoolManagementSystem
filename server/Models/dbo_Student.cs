@@ -18,5 +18,6 @@ namespace server.Models
         public int? UserId { get; set; } = null;
         public dbo_User? User { get; set; } = null;
         public string? Photo { get; set; }
+        public DateTime DateOfBirth { get; set; }
     }
 }

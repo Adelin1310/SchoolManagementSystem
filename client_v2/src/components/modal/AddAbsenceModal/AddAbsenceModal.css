@@ -1,0 +1,56 @@
+.add-absence-modal {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.add-absence-modal h2 {
+    color: var(--text-color);
+    margin-top: 0;
+}
+
+.add-absence-modal form {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin-top: 20px;
+}
+
+.add-absence-modal label {
+    color: var(--text-color);
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+.add-absence-modal input {
+    padding: 8px;
+    border: 1px solid var(--dark-color);
+    border-radius: 3px;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.add-absence-modal button {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 15px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.add-absence-modal button:hover {
+    background-color: var(--secondary-color);
+}
+
+.add-absence-modal input[type='number']::-webkit-inner-spin-button,
+.add-absence-modal input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.add-absence-modal input[type='number'] {
+    -moz-appearance: textfield;
+}

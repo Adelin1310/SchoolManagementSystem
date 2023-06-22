@@ -1,12 +1,12 @@
 
 import React, { useMemo } from "react";
-import { Link } from "react-router-dom";
+import { Link, json } from "react-router-dom";
 import { useTable, useSortBy, useGroupBy, useExpanded } from "react-table";
 import './table.css'
 import FilterListIcon from '@mui/icons-material/FilterList';
 import FilterListOffIcon from '@mui/icons-material/FilterListOff';
 
-function Table({ columns, data, onDelete }) {
+function Table({ columns, data, allowedActions = [] }) {
   const memoizedColumns = useMemo(() => columns, [columns]);
   const memoizedData = useMemo(() => data, [data]);
   const tableMaxHeight = window.screen.availHeight * .65;
@@ -18,6 +18,9 @@ function Table({ columns, data, onDelete }) {
     useExpanded
   );
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
+
+  const handleActionType = (action, row) => action.type === "View" ? (<Link className="view-link" to={`${row.cells[0].value}`}>View</Link>) :
+    action.type === "Delete" ? (<button onClick={() => action.event(row.original)}>Delete</button>) : null
 
   return (
     <table className="tableMain" {...getTableProps()}>
@@ -31,13 +34,13 @@ function Table({ columns, data, onDelete }) {
                   <span>{column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : ""}</span>
                   {column.canGroupBy ? (
                     <span {...column.getGroupByToggleProps()}>
-                      {column.isGrouped ? <FilterListOffIcon /> : <FilterListIcon />}
+                      {column.isGrouped ? <FilterListOffIcon className="filterIcon" /> : <FilterListIcon className="filterIcon" />}
                     </span>
                   ) : null}
                 </div>
               </th>
             ))}
-            <th className="headCell">Actions</th>
+            {allowedActions.length !== 0 && <th className="headCell">Actions</th>}
           </tr>
         ))}
       </thead>
@@ -62,16 +65,23 @@ function Table({ columns, data, onDelete }) {
                   )}
                 </td>
               ))}
-              <td className="tableRowCell">
-                {row.subRows.length > 0 ?
-                  null
-                  :
-                  (<React.Fragment>
-                    <button onClick={() => onDelete(row.original)}>Delete</button>
-                    <Link to={`${row.cells[0].value}`}>View</Link>
-                  </React.Fragment>
-                  )}
-              </td>
+              {
+                allowedActions.length > 0 ?
+                  (
+                    <td className="tableRowCell">
+                      {row.subRows.length > 0 ?
+                        null
+                        :
+                        (
+                          allowedActions.map((act =>
+                            <React.Fragment>
+                              {handleActionType(act, row)}
+                            </React.Fragment>))
+                        )
+                      }
+                    </td>
+                  ) : null
+              }
             </tr>
           );
         })}

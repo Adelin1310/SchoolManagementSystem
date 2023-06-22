@@ -13,8 +13,10 @@ namespace server.Controllers
     public class ClassController : ControllerBase
     {
         private readonly IClassService _service;
-        public ClassController(IClassService service)
+        private readonly IAuthService _auth;
+        public ClassController(IClassService service, IAuthService auth)
         {
+            _auth = auth;
             _service = service;
         }
         [HttpDelete("DeleteClassById")]
@@ -42,6 +44,17 @@ namespace server.Controllers
             var res = await _service.GetAllClasses();
             return res;
         }
+        [HttpGet("GetAllTeacherClasses")]
+        public async Task<ActionResult<SR<List<GetClassSubjectDto>>>> GetAllTeacherClasses()
+        {
+            var sessionID = Request.Cookies["sessionID"];
+            var user = await _auth.ValidateToken(sessionID);
+            if (user.StatusCode != StatusCodes.Status200OK) return StatusCode(401, user);
+            var teacher = await _auth.GetTeacherProfile(sessionID);
+            if (teacher.StatusCode != StatusCodes.Status200OK) return StatusCode(401, teacher);
+            var res = await _service.GetAllTeacherClasses(teacher.Data.Id);
+            return res;
+        }
         [HttpGet("GetClassById")]
         public async Task<ActionResult<SR<GetClassDto>>> GetClassById(int classId)
         {
@@ -53,6 +66,14 @@ namespace server.Controllers
         {
             var res = await _service.UpdateClassById(classId, updatedClass);
             return res;
+        }
+
+        [HttpGet("GetStudentClass")]
+        public async Task<ActionResult<SR<GetStudentClassDto>>> GetStudentClass()
+        {
+            var sessionID = Request.Cookies["sessionID"];
+            var res = await _service.GetStudentClass(sessionID);
+            return StatusCode(res.StatusCode, res);
         }
     }
 }

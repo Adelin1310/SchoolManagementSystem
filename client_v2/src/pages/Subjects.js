@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Actions from '../components/actions/Actions'
 import Table from '../components/table/Table'
 import { subjectsColumns } from '../data/TableColumns'
 import { deleteSubjectById, getAllSubjects } from '../api/Subjects'
@@ -26,7 +25,6 @@ const Subjects = () => {
 
     return (
         <div>
-            <Actions/>
             {
                 subjects !== undefined ?
                     <Table

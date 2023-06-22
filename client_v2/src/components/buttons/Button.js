@@ -4,7 +4,7 @@ import './button.css'
 
 const Button = ({ to, value }) => {
   return (
-    <div className='btn'>
+    <div className='action-btn'>
       <Link to={to}>{value}</Link>
     </div>
   )

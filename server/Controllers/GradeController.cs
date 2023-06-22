@@ -13,9 +13,11 @@ namespace server.Controllers
     public class GradeController : ControllerBase
     {
         private readonly IGradeService _service;
+        private readonly IAuthService _auth;
 
-        public GradeController(IGradeService service)
+        public GradeController(IGradeService service, IAuthService auth)
         {
+            _auth = auth;
             _service = service;
         }
         [HttpGet("GetAllGrades")]
@@ -27,8 +29,13 @@ namespace server.Controllers
         [HttpPost("AddGrade")]
         public async Task<ActionResult<SR<GetGradeDto>>> AddGrade(AddGradeDto newGrade)
         {
+            var sessionID = Request.Cookies["sessionID"];
+            var user = await _auth.ValidateToken(sessionID);
+            if (user.StatusCode != StatusCodes.Status200OK) return StatusCode(401, user);
+            var teacher = await _auth.GetTeacherProfile(sessionID);
+            if (teacher.StatusCode != StatusCodes.Status200OK) return StatusCode(401, teacher);
             var res = await _service.AddGrade(newGrade);
-            return res;
+            return StatusCode(res.StatusCode, res);
         }
         [HttpDelete("DeleteGradeById")]
         public async Task<ActionResult<object>> DeleteGradeById(int gradeId)

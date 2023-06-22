@@ -1,5 +1,7 @@
 import axios from 'axios'
-const controller = 'http://localhost:7055/api/Auth/';
+import { json } from 'react-router-dom';
+import { host } from '.';
+const controller = `${host}Auth/`;
 
 
 export const login = async (credentials) => {
@@ -25,7 +27,7 @@ export const validateToken = async () => {
         const res = await axios.post(controller + 'validate', null, { withCredentials: true })
         return res.data
     } catch (err) {
-        console.log(err)
+        throw err;
     }
 }
 
@@ -43,6 +45,10 @@ export const getProfile = async (role) => {
         const res = await axios.get(controller + `get${role}Profile`, { withCredentials: true })
         return res.data;
     } catch (err) {
-        console.log(err)
+        throw json(
+            {
+                status: parseInt(err.response.status)
+            }
+        )
     }
 }

@@ -1,0 +1,100 @@
+.main-container {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    padding: 20px;
+}
+
+.subject-select {
+    margin-bottom: 20px;
+}
+
+.subject-select select {
+    background-color: var(--dark-color);
+    color: var(--text-color);
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+}
+
+.classbook-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    overflow-y: scroll;
+}
+
+.student-container {
+    display: flex;
+    flex-direction: row;
+    background-color: var(--dark-color);
+    align-items: center;
+    padding: 20px;
+    border-radius: 4px;
+    margin: 3px;
+}
+
+.student-name {
+    font-weight: bold;
+    width: 25%;
+    margin-bottom: 10px;
+    color: var(--text-color);
+}
+
+
+
+.student-grade {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+}
+
+.add-grade,
+.add-absence,
+.end-situation {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+}
+
+.end-situation.active-btn {
+    cursor: pointer;
+    background-color: var(--accent-color);
+}
+.end-situation.inactive-btn{
+    opacity: .5;
+    pointer-events: none;
+}
+.student-grades, .student-absences, .student-situations {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+}
+
+.student-absence {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: 5px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+}
+
+.student-absence.wLeave {
+    background-color: var(--secondary-color);
+}
+
+.hteacher{
+    cursor: pointer;
+}

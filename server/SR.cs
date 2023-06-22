@@ -20,9 +20,21 @@ namespace server
             StatusCode = StatusCodes.Status404NotFound;
         }
 
-        public void SetStatusCode(int statusCode){
+        public void SetStatusCode(int statusCode)
+        {
             this.StatusCode = statusCode;
         }
-
+        public void SetError()
+        {
+            Success = false;
+            StatusCode = StatusCodes.Status500InternalServerError;
+            Message = "Unexpected Error! Contact support team.";
+        }
+        public void SetSessionExpiredError()
+        {
+            Success = false;
+            StatusCode = StatusCodes.Status401Unauthorized;
+            Message = "Session Expired!";
+        }
     }
 }

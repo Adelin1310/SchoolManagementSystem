@@ -14,6 +14,6 @@ namespace server.Dtos.Student
         public int SchoolId { get; set; }
         public int UserId { get; set; }
         public string? Photo { get; set; }
-
+        public DateTime DateOfBirth { get; set; }
     }
 }

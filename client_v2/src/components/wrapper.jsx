@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./navbar/Navbar";
 import Topbar from "./topbar/Topbar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useStateContext } from "../contexts/UserContext";
-import Login from "./pages/login/Login";
 import { validateToken } from "../api/Auth";
-import Modal from "./modal/Modal";
-import SessionExpiredModal from "./modal/SessionExpiredModal/SessionExpiredModal";
 
 const Wrapper = () => {
+  const navigate = useNavigate();
   const {
     currentUser,
     sideMenuOpened,
@@ -17,36 +15,32 @@ const Wrapper = () => {
     setSideMenuOpened,
     setTheme,
   } = useStateContext();
-  const [isSessionValid, setIsSessionValid] = useState(currentUser !== null);
-  setInterval(() => {
+  useEffect(() => {
     const checkTokenValidity = async () => {
       try {
         const res = await validateToken();
         if (!res.success) {
           setCurrentUser(null);
+          navigate("/app/login");
         } else {
           setCurrentUser(res.data);
         }
       } catch (error) {
         setCurrentUser(null);
+        navigate("/app/login");
       }
     };
     checkTokenValidity();
-    setIsSessionValid(currentUser !== null);
-  }, 600000);
+  }, []);
 
   return (
     <div className="App" data-theme={theme}>
       {currentUser !== null ? (
         <React.Fragment>
-          <Modal
-            initial={isSessionValid}
-            isCloseable={false}
-            component={<SessionExpiredModal />}
-          />
           <Navbar
             sideMenuState={sideMenuOpened}
             changeTheme={() => setTheme(theme === "light" ? "dark" : "light")}
+            actualTheme={theme}
           />
           <Topbar
             sideMenuState={sideMenuOpened}
@@ -59,7 +53,7 @@ const Wrapper = () => {
           </div>
         </React.Fragment>
       ) : (
-        <Login />
+        <Outlet />
       )}
     </div>
   );

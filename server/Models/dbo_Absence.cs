@@ -8,11 +8,13 @@ namespace server.Models
     public class dbo_Absence
     {
         public int Id { get; set; }
+        public int ClassbookId { get; set; }
+        public dbo_Classbook Classbook { get; set; }
         public int StudentId { get; set; }
-        public dbo_Student Student { get; set; } = new dbo_Student();
+        public dbo_Student Student { get; set; }
         public int SubjectId { get; set; }
-        public dbo_Subject Subject { get; set; } = new dbo_Subject();
+        public dbo_Subject Subject { get; set; }
         public DateTime Date { get; set; }
-        public bool WithLeave { get; set; }
+        public bool WithLeave { get; set; } = false;
     }
 }

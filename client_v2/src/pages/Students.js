@@ -25,7 +25,6 @@ const Students = () => {
 
     return (
         <div>
-            <Actions/>
             {
                 students !== undefined ?
                     <Table

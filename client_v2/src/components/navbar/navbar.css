@@ -1,32 +1,32 @@
 @import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;800;900&display=swap);
 
 
-.themeBtns {
+.nv-themeBtns, .nv-mobileThemeBtns {
     display: flex;
     margin: auto;
     margin-bottom: 50px;
     width: fit-content;
-    color: var(--borderColor)
+    color: var(--text-color)
 }
 
-.icon {
+.nv-icon {
     color: inherit;
 }
 
-.container {
+.nv-container {
     font-family: 'Montserrat', sans-serif;
     transition-duration: .5s;
     position: absolute;
     display: flex;
     flex-direction: column;
     height: 100%;
-    min-width: 12%;
-    background-color: var(--secondaryColor);
+    width: 12%;
+    background-color: var(--dark-color);
     animation: slideRight .5s;
     z-index: 1;
 }
 
-.navmenu {
+.nv-navmenu {
     display: flex;
     height: 50%;
     flex-direction: column;
@@ -39,12 +39,13 @@
     align-items: center;
 }
 
-.navmenu>li>div, .navmenu>li>a {
-    color: var(--borderColor);
+.nv-navmenu>li>div,
+.nv-navmenu>li>a {
+    color: var(--text-color);
     padding: 20px;
 }
 
-.navmenu>li {
+.nv-navmenu>li {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -56,7 +57,8 @@
     margin-top: 10px;
 }
 
-.navmenu>li>a, .navmenu>li>div {
+.nv-navmenu>li>a,
+.nv-navmenu>li>div {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -66,28 +68,51 @@
     margin: 5px 8px;
 }
 
-.navmenu>li>a:hover, .navmenu>li>div:hover{
+.nv-navmenu>li>a:hover,
+.nv-navmenu>li>div:hover {
     transition-duration: .5s;
-    background-color: var(--borderColor);
-    color: var(--textColor);
+    background-color: var(--primary-color);
+    color: var(--text-color);
 }
 
-.active {
-    color: var(--textColor);
-    background-color: var(--borderColor);
+.nv-active {
+    color: var(--text-color);
+    background-color: var(--primary-color);
 }
 
-.logo {
+.nv-logo-container {
+    min-height: 70px;
+    display: flex;
+    justify-content: center;
+}
+
+.nv-logo,
+.nv-mobilelogo {
     font-size: x-large;
-    font-weight: 400;
+    font-weight: bold;
     align-self: flex-start;
     margin-top: 0;
-    color: var(--borderColor);
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--primary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
     text-align: center;
-    margin: 20px auto;
+    background-size: 200% auto;
+    align-self: center;
+
+    animation: shine 3s linear infinite;
 }
 
-.hide {
+.nv-mobilelogo, .nv-mobileThemeBtns {
+    display: none;
+}
+
+@keyframes shine {
+    to {
+        background-position: 200% center;
+    }
+}
+
+.nv-hide {
     animation: slideLeft .5s forwards;
 }
 
@@ -108,5 +133,64 @@
 
     to {
         left: -450px;
+    }
+}
+
+@media screen and (max-width:768px) {
+    .nv-mobilelogo {
+        display: initial;
+    }
+
+    .nv-logo {
+        display: none;
+    }
+
+    .nv-navmenu>li {
+        font-size: small;
+    }
+}
+
+@media screen and (max-width:1440px) {
+    .nv-logo {
+        font-size: 18px !important;
+    }
+
+    .nv-navmenu>li {
+        font-size: 14px;
+    }
+
+    .nv-themeBtns {
+        scale: .8;
+    }
+}
+
+@media screen and (max-width:1024px) {
+    .nv-logo {
+        font-size: 14px !important;
+    }
+
+    .nv-navmenu>li {
+        font-size: 10px;
+    }
+
+    .nv-themeBtns {
+        scale: .6;
+    }
+
+    .nv-navmenu>li>div,
+    .nv-navmenu>li>a {
+        padding: 0;
+    }
+}
+
+@media screen and (max-width:500px){
+    .nv-mobileThemeBtns{
+        display: initial;
+    }
+    .nv-themeBtns{
+        display: none;
+    }
+    .nv-icon-text{
+        display: none;
     }
 }

@@ -4,7 +4,7 @@
 .TblContainer {
     padding: 10px;
     font-family: 'Montserrat', sans-serif;
-    color: var(--textColor);
+    color: var(--text-color);
     text-align: center;
     height: 100%;
     border-radius: 5px;
@@ -14,7 +14,7 @@
     max-width: 100%;
     margin: auto;
     display: block;
-    background-color: var(--secondaryColor);
+    background-color: var(--dark-color);
     border-collapse: separate;
     border-spacing: 0;
     max-height: 100%;
@@ -37,6 +37,9 @@ tbody tr {
     width: 100%;
     margin: 5px 0;
 }
+thead{
+    margin: auto;
+}
 thead tr th{
     padding: 20px 5px !important;
 }
@@ -48,14 +51,14 @@ td {
 
 tr:not(.headRow) {
     border-radius: 10px;
-    color:var(--btnHoverColor);
+    color:var(--text-color);
 }
 
 tr:not(.headRow):hover {
     cursor: pointer;
     transition-duration: .3s;
-    background-color: var(--borderColor) !important;
-    color: var(--alternateColor) !important;
+    background-color: var(--primary-color) !important;
+    color: var(--text-color) !important;
 }
 
 tr .headCell:first-child {
@@ -69,12 +72,12 @@ tr .headCell:last-child {
 .headRow,
 .groupRow {
     font-weight: 500;
-    background-color: var(--borderColor);
-    color: var(--btnHoverColor);
+    background-color: var(--primary-color);
+    color: var(--text-color);
 }
 .groupRow{
-    background-color: var(--secondaryColorLight) !important;
-    color: var(--textColor) !important;
+    background-color: var(--dark-color) !important;
+    color: var(--text-color) !important;
 }
 .flex {
     display: flex;
@@ -117,6 +120,117 @@ tr .headCell:last-child {
 }
 
 .pg-btn.active {
-    color: var(--borderColor);
-
+    color: var(--accent-color);
+}
+.view-link{
+    text-decoration: none;
+    color:var(--text-color);
+}
+@media screen and (max-width:800px){
+    .TblContainer {
+        padding: 8px;
+        
+    }
+    
+    tbody {
+        padding: 8px;
+    }
+    
+    thead,
+    tbody tr {
+        margin: 4px 0;
+    }
+    thead tr th{
+        padding: 20px 5px !important;
+    }
+    th,
+    td {
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+    }
+    
+    .headRow,
+    .groupRow {
+        font-weight: 300;
+    }
+    
+    .headCell {
+        font-size: 14px;
+        padding: 2px;
+    }
+    
+    .tableRowCell {
+        text-align: center;
+        font-size: 13px;
+        font-weight: 300;
+        padding: 2px;
+    }
+    
+    .pg-btn {
+        font-size: medium;
+        margin: .5rem;
+    }
+    .tableRowCell>img{
+        width: 60px !important;
+    }
+    .flexHeader{
+        align-items: center;
+    }
+    .filterIcon{
+        width: 20px !important;
+    }
+}
+@media screen and (max-width:500px){
+    .TblContainer {
+        padding: 4px;
+        
+    }
+    
+    tbody {
+        padding: 4px;
+    }
+    
+    thead,
+    tbody tr {
+        margin: 2px 0;
+    }
+    thead tr th{
+        padding: 10px 2px !important;
+    }
+    th,
+    td {
+        padding-left: 7px !important;
+        padding-right: 7px !important;
+    }
+    
+    .headRow,
+    .groupRow {
+        font-weight: 200;
+    }
+    
+    .headCell {
+        font-size: 8px;
+        padding: 1px;
+    }
+    
+    .tableRowCell {
+        text-align: center;
+        font-size: 6px;
+        font-weight: 100;
+        padding: 2px;
+    }
+    
+    .pg-btn {
+        font-size: small;
+        margin: .25rem;
+    }
+    .tableRowCell>img{
+        width: 30px !important;
+    }
+    .flexHeader{
+        align-items: center;
+    }
+    .filterIcon{
+        width: 15px !important;
+    }
 }

@@ -20,5 +20,6 @@ namespace server.Dtos.Student
         public int ClassId { get; set; }
         public string School { get; set; } = string.Empty;
         public string? Photo { get; set; }
+        public DateOnly DateOfBirth { get; set; }
     }
 }

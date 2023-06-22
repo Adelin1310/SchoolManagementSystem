@@ -10,10 +10,10 @@ namespace server.Dtos.Grade
     {
         public int Id { get; set; }
         public int StudentId { get; set; }
-        public dbo_Student Student { get; set; } = new dbo_Student();
+        public dbo_Student Student { get; set; }
         public int SubjectId { get; set; }
-        public dbo_Subject Subject { get; set; } = new dbo_Subject();
+        public dbo_Subject Subject { get; set; }
         public int Value { get; set; }
-        public DateTime Date { get; set; }
+        public DateOnly Date { get; set; }
     }
 }

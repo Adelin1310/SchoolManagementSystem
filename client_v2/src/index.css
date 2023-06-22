@@ -1,32 +1,55 @@
 @import url(https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;800;900&display=swap);
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
 
 :root {
-  --mainColor: #fbfbff;
-  --mainColorDark: #dddde0;
-  --secondaryColor: #231123;
-  --secondaryColorAlternate: #3185FC;
-  --secondaryColorLight: #72acfd;
-  --alternateColor: #031927;
-  --borderColor: #A33B20;
-  --textColor: #A52422;
-  --hoverTextColor: #9191E9;
-  --btnHoverColor: #293241;
-  --defaultFont: font-family: 'Montserrat', sans-serif;
+  --primary-color: #7c5dfa;
+  --secondary-color: #ff5e57;
+  --text-color: #282c34;
+  --bg-color: #fff;
+  --dark-color: #eaeaea;
+  --accent-color: #40c9a2;
+  --defaultFont: 'Open Sans', sans-serif !important;
 }
+
 
 [data-theme='dark'] {
-  --mainColor: #293241;
-  --mainColorDark: #dddde0;
-  --secondaryColor: #3d5a80;
-  --secondaryColorLight: #667485;
-  --alternateColor: #ffffff;
-  --borderColor: #ED9B40;
-  --textColor: #130303;
-  --hoverTextColor: #e2f1fa;
-  --btnHoverColor: #fbfbff;
-  --defaultFont: font-family: 'Montserrat', sans-serif;
+  --primary-color: #7c5dfa;
+  --secondary-color: #ff5e57;
+  --text-color: #fff;
+  --bg-color: #1f2126;
+  --dark-color: #282c34;
+  --accent-color: #40c9a2;
+  --defaultFont: 'Open Sans', sans-serif !important;
 }
 
+/* hide the default scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 10px;
+}
+
+/* style the thumb */
+::-webkit-scrollbar-thumb {
+  background-color: var(--secondary-color);
+  border-radius: 5px;
+}
+
+/* style the thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--primary-color);
+}
+
+/* style the track */
+::-webkit-scrollbar-track {
+  background-color: var(--bg-color);
+}
+
+/* style the track on hover */
+::-webkit-scrollbar-track:hover {
+  background-color: var(--dark-color);
+}
 
 
 * {

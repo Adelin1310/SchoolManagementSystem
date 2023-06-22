@@ -12,48 +12,17 @@
     background-color: rgba(0, 0, 0, .5);
     z-index: 2;
 }
-
-.modal-frame{
-    display: flex;
-    margin: auto;
-    border-radius: 5px;
-    width: 25%;
-    height: 12%;
-    background-color: var(--secondaryColor);
-    color: var(--borderColor);
-}
-.modal-content{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-.modal-text-group{
-    margin: auto;
-    margin-left: 5%;
-    font-weight: 300;
-    font-family: var(--defaultFont);
-}
-
-.modal-text.large{
-    font-size: large;
-    font-weight: 500;
-}
-.modal-text.small{
-    font-size: small;
-    font-weight: 400;
-}
-
-.modal-btn{
-    background-color: var(--mainColor);
-    color:var(--borderColor);
-    border-color: transparent;
-    border-radius: 5px;
-    margin: auto;
-    margin-right: 3%;
-    margin-bottom: 3%;
+.modal-close-btn{
+    height:fit-content;
     cursor: pointer;
+    font-weight: 500;
+    color: var(--secondary-color)
 }
-
-.modal-btn.medium{
-    padding: 5px 10px;
+.modal-frame {
+    display: flex;
+    margin: auto;
+    border-radius: 5px;
+    padding: 15px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
 }

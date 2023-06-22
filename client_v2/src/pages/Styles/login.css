@@ -6,7 +6,7 @@
     width: 100%;
     align-items: center;
     justify-content: center;
-    background-color: var(--mainColor);
+    background-color: var(--bg-color);
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -14,17 +14,16 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: var(--alternateColor);
+    background-color: var(--secondary-color);
     border-radius: 5px;
-    box-shadow: 0px 0px 5px 1px gray;
-    color: var(--mainColor);
+    color: var(--text-color);
 }
 
 .login-container p {
     font-size: 25px;
     margin: 40px 80px 20px 80px;
     font-weight: 400;
-    color: var(--mainColor);
+    color: var(--text-color);
 }
 
 .login-container form {
@@ -50,36 +49,32 @@
 }
 
 .form-group input[type="password"]::placeholder,
-.form-group input[type="email"]::placeholder {
-    color: var(--mainColor);
+.form-group input[type="text"]::placeholder {
     opacity: .9;
     font-family: 'Montserrat', sans-serif;
 }
 
 .form-group input[type="password"],
-.form-group input[type="email"] {
+.form-group input[type="text"] {
     padding: 3px;
     border-radius: 3px;
     outline: none;
     border: 1px solid transparent;
-    border-bottom: 1px solid var(--mainColor);
-    background-color: transparent;
     margin: 4px auto;
     font-family: 'Montserrat', sans-serif;
-    color: var(--mainColor);
     width: 100%;
 }
 
 .form-group input[type="password"]:focus,
-.form-group input[type="email"]:focus {
+.form-group input[type="text"]:focus {
     border: 1px solid transparent;
-    border: 1px solid var(--mainColor);
+    border: 1px solid var(--primary-color);
     transition-duration: .5s;
 }
 
 .login-container form button[type="submit"] {
-    background-color: var(--secondaryColor);
-    color: var(--textColor);
+    background-color: var(--secondary-color);
+    color: var(--text-color);
     outline: none;
     border: none;
     border-radius: 2px;
@@ -88,10 +83,10 @@
     font-family: 'Montserrat', sans-serif;
     margin-top: 15px;
     width: 100%;
+    background-color: var(--primary-color);
     cursor: pointer;
 }
 
 .login-container form button[type="submit"]:hover{
-    background-color: var(--secondaryColorLight);
     transition-duration: .3s;
 }

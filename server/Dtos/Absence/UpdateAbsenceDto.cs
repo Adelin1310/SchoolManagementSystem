@@ -7,6 +7,6 @@ namespace server.Dtos.Absence
 {
     public class UpdateAbsenceDto
     {
-        public bool WithLeave { get; set; }
+        public int Id { get; set; }
     }
 }

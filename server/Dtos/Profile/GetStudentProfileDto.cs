@@ -8,9 +8,9 @@ namespace server.Dtos.Profile
 {
     public class GetStudentProfileDto : Base.Profile
     {
-        public string Class { get; set; } = string.Empty;
-        public string School { get; set; } = string.Empty;
+        public Class.GetClassDto Class { get; set; }
+        public ParentsInfo.GetParentsInfoDto ParentsInfo { get; set; }
         public List<Grade.GetGradeDto> LatestGrades = new List<Grade.GetGradeDto>();
-        public List<Absence.GetAbsenceDto> Absences = new List<Absence.GetAbsenceDto>(); 
+        public List<Absence.GetAbsenceDto> Absences = new List<Absence.GetAbsenceDto>();
     }
 }

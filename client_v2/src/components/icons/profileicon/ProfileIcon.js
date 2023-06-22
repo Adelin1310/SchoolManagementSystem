@@ -1,10 +1,11 @@
 import React from 'react'
 import './profileicon.css'
-const ProfileIcon = ({ imgUrl, profileLink }) => {
+import { Link } from 'react-router-dom'
+const ProfileIcon = ({ imgUrl }) => {
     return (
-        <span className='profileicon'>
+        <Link to={'profile'} className='profileicon'>
             <img src={imgUrl} alt=''></img>
-        </span>
+        </Link>
     )
 }
 

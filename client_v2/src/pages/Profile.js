@@ -6,12 +6,9 @@ import TeacherProfile from '../components/profile/TeacherProfile';
 const Profile = () => {
     const { currentUser } = useStateContext()
     return (
-        <div>
-            {
-                currentUser.role === "Student" ? <StudentProfile /> :
-                    (currentUser.role === "Teacher" || currentUser.role === "Director") ? <TeacherProfile /> : ''
-            }
-        </div>
+        currentUser !== null &&
+        currentUser?.role === "Student" ? <StudentProfile /> :
+            (currentUser?.role === "Teacher" || currentUser?.role === "Director") ? <TeacherProfile /> : ''
     );
 }
 

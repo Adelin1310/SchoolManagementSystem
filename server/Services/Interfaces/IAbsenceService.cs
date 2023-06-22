@@ -14,7 +14,7 @@ namespace server.Services.Interfaces
         Task<SR<List<GetAbsenceDto>>> GetAllStudentAbsences(int studentId);
         Task<SR<GetAbsenceDto>> GetAbsenceById(int absenceId);
         Task<SR<GetAbsenceDto>> AddAbsence(AddAbsenceDto newAbsence);
-        Task<SR<GetAbsenceDto>> UpdateAbsenceById(int absenceId, UpdateAbsenceDto updatedAbsence);
+        Task<SR<GetAbsenceDto>> UpdateAbsenceById(UpdateAbsenceDto updatedAbsence, int teacherId);
         Task<object> DeleteAbsenceById(int absenceId);
     }
 }
